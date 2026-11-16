@@ -16,7 +16,10 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-      - run: npm run build
+      - name: Optimizar build con Needle
+        run: npm run build
+        env:
+          NEEDLE_CLOUD_TOKEN: ${{ secrets.NEEDLE_CLOUD_TOKEN }}
       - uses: needle-tools/deploy-to-needle-cloud-action@v1
         with:
           token: ${{ secrets.NEEDLE_CLOUD_TOKEN }}

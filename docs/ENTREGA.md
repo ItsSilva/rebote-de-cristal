@@ -34,7 +34,7 @@ El coordinador del anfitrión valida plaza, sesión, secuencias de poses y venta
 
 Se actualizaron ws y Vite. `dependency-audit.json` registra dos avisos moderados en producción asociados a uuid y al runtime que lo incorpora; npm no ofrece una corrección compatible dentro de la versión fijada del SDK. También hay avisos en herramientas de desarrollo. No se aplicó una actualización mayor forzada del motor.
 
-Las fuentes y comandos reproducibles están en el README. Los workflows de GitHub comprueban el proyecto y preparan despliegue mediante la acción oficial de Needle; el despliegue manual realizado aquí ya está publicado. No se ha configurado un secreto de CI para publicar automáticamente.
+Las fuentes y comandos reproducibles están en el README. El workflow de comprobación instala desde cero, valida tipos, ejecuta pruebas y compila sin optimización autenticada. El workflow manual de despliegue usa la acción oficial de Needle y necesita `NEEDLE_CLOUD_TOKEN` para optimizar y publicar. El build de producción optimizado realizado aquí ya está publicado; no se ha creado un secreto de CI ni activado publicación automática.
 
 Equipo confirmado: Juan Silva (juansilva112), Majo Rodríguez Martínez (abejitallorona) e Isa Cabrera Sogamoso (isabellcabrera3). Sus aportes individuales siguen pendientes de declaración. Se declara la asistencia de Codex en código, geometría procedural, pruebas y documentación.
 
