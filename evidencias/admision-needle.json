@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-16T21:21:53.682Z",
+  "url": "https://rebote-de-cristal-160ydy19qg7w.needle.run/?room=RACE-mwjrqsjs",
+  "method": "Anfitrión establecido; dos solicitudes concurrentes; CPU cerrada y segunda sala independiente",
+  "host": "3060acfb-0c32-45d0-9f19-ed7c5d0f3a94",
+  "racing": [
+    {
+      "online": false,
+      "side": 0,
+      "message": "Sala llena · CPU local disponible."
+    },
+    {
+      "online": true,
+      "side": 1,
+      "message": "Toma la pala. Activa el saque. Devuelve la pelota tras el primer bote."
+    }
+  ],
+  "club": {
+    "session": "fbe611be-d1de-4735-8cf3-7c4838a6c6f5",
+    "host": "3060acfb-0c32-45d0-9f19-ed7c5d0f3a94",
+    "seats": [
+      "3060acfb-0c32-45d0-9f19-ed7c5d0f3a94",
+      "67af75c7-f1fa-4ce7-a8a2-03e0f9ad5889"
+    ],
+    "mode": "auto",
+    "ready": [
+      false,
+      false
+    ],
+    "revision": 1,
+    "closed": false
+  },
+  "solo": "Partida individual · CPU local disponible.",
+  "isolated": {
+    "session": "dfbe240d-ec6e-4fed-b860-9a283b301142",
+    "host": "2416d459-00eb-4254-b8c9-a52bacd0d464",
+    "seats": [
+      "2416d459-00eb-4254-b8c9-a52bacd0d464",
+      null
+    ],
+    "mode": "auto",
+    "ready": [
+      false,
+      false
+    ],
+    "revision": 0,
+    "closed": false
+  },
+  "final": {
+    "session": "fbe611be-d1de-4735-8cf3-7c4838a6c6f5",
+    "host": "3060acfb-0c32-45d0-9f19-ed7c5d0f3a94",
+    "seats": [
+      "3060acfb-0c32-45d0-9f19-ed7c5d0f3a94",
+      null
+    ],
+    "mode": "cpu",
+    "ready": [
+      false,
+      false
+    ],
+    "revision": 3,
+    "closed": false
+  },
+  "passed": true,
+  "errors": []
+}

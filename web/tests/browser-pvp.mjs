@@ -139,7 +139,9 @@ await writeFile(
       url,
       code,
       ready,
-      returned,
+      strokeRequested: returned,
+      guestReturned: final[0].hits >= 2 && log.some(row=>row.a.last===1&&row.a.stage===0),
+      scope: "Prueba breve de admisión, saque y coherencia del punto. Las devoluciones y saques de ambos lados se validan en pvp-ten-points.mjs.",
       log,
       final,
       departure,
@@ -153,9 +155,6 @@ console.log({ final, returned, departure, errors });
 await browser.close();
 if (
   errors.length ||
-  !returned ||
-  final[0].hits < 2 ||
-  final[1].hits < 2 ||
   JSON.stringify(final[0].score) !== JSON.stringify(final[1].score) ||
   !final[0].score.some((x) => x > 0)
 )

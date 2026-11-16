@@ -16,6 +16,15 @@ const url = process.env.GAME_URL || "http://localhost:4173/";
 await page.goto(url);
 await page.waitForFunction(() => window.clubGame);
 await page.waitForTimeout(2500);
+const renderSample = await page.evaluate(async () => {
+  let best = {calls:0, triangles:0};
+  for (let i=0; i<20; i++) {
+    await new Promise(resolve => setTimeout(resolve,20));
+    const frame = window.clubGame.ctx.renderer.info.render;
+    if (frame.calls > best.calls) best = {...frame};
+  }
+  return best;
+});
 const result = await page.evaluate(() => {
   const g = window.clubGame;
   let lightmapped = 0,
@@ -49,6 +58,7 @@ const result = await page.evaluate(() => {
     ar: document.querySelector("#ar").textContent,
   };
 });
+result.render = renderSample;
 await page.screenshot({ path: "../evidencias/08-build-final.png" });
 await writeFile(
   "../evidencias/artefacto-web.json",
@@ -70,3 +80,4 @@ if (
   result.authoringEquipment
 )
   process.exitCode = 1;
+

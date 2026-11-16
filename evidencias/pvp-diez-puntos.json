@@ -1,0 +1,707 @@
+{
+  "date": "2026-11-16T21:21:05.845Z",
+  "url": "https://rebote-de-cristal-160ydy19qg7w-zpg1og.needle.run/?room=DIEZ-MWJRP76L",
+  "method": "Dos contextos independientes; teclado y ratón, sin asignar pelota ni marcador. Hasta diez puntos en partidas a siete.",
+  "points": [
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          1,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 1,
+        "rally": 2,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.1109641134055517,
+          "z": -1.6742804455960905
+        },
+        "swing": 0,
+        "latency": 0.16639999999851085,
+        "lateContacts": 0
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          1,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 1,
+        "rally": 2,
+        "p": {
+          "x": -0.7430400000482799,
+          "y": 1.0528975472255973,
+          "z": 0.42819853364319915
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.1109641134055517,
+          "z": -1.6742804455960905
+        },
+        "swing": 0,
+        "latency": 0.1770999999977656,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          2,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 3,
+        "rally": 3,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.0804548405439816,
+          "z": 4.054559014184775
+        },
+        "swing": 0,
+        "latency": 0.17400000000000126,
+        "lateContacts": 0
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          2,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 3,
+        "rally": 3,
+        "p": {
+          "x": -0.7430399999678137,
+          "y": 1.051577029880679,
+          "z": 0.9050318951735232
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.0804548405439816,
+          "z": 4.054559014184775
+        },
+        "swing": 0.2,
+        "latency": 0.19260000000148914,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          3,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 2,
+        "hits": 4,
+        "rally": 4,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": -5.3465271395704645,
+          "z": 3.219326518431871
+        },
+        "swing": 0,
+        "latency": 0.1719000000022337,
+        "lateContacts": 1
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          3,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 2,
+        "hits": 4,
+        "rally": 4,
+        "p": {
+          "x": 0,
+          "y": -1.2665422572825351,
+          "z": 2.991575905506868
+        },
+        "velocity": {
+          "x": 0,
+          "y": -5.3465271395704645,
+          "z": 3.219326518431871
+        },
+        "swing": 0,
+        "latency": 0.17150000000000176,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          4,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 1,
+        "stage": 0,
+        "hits": 8,
+        "rally": 5,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": -2.3571605084810248,
+          "z": -3.802763500236085
+        },
+        "swing": 0,
+        "latency": 0.18100000000000094,
+        "lateContacts": 2
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          4,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 1,
+        "stage": 0,
+        "hits": 8,
+        "rally": 5,
+        "p": {
+          "x": -0.7257600000321865,
+          "y": 0.7878806859641271,
+          "z": -0.4463783955311271
+        },
+        "velocity": {
+          "x": 0,
+          "y": -2.3571605084810248,
+          "z": -3.802763500236085
+        },
+        "swing": 0,
+        "latency": 0.17680000000074436,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          5,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 9,
+        "rally": 6,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.174231001774683,
+          "z": -1.6455095380615468
+        },
+        "swing": 0,
+        "latency": 0.2536999999992524,
+        "lateContacts": 2
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          5,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 9,
+        "rally": 6,
+        "p": {
+          "x": -0.522720000064373,
+          "y": 1.0429884737846409,
+          "z": -0.12875262979681867
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.174231001774683,
+          "z": -1.6455095380615468
+        },
+        "swing": 0,
+        "latency": 0.17420000000297975,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          6,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 10,
+        "rally": 7,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.1819128063043705,
+          "z": -1.664156529422239
+        },
+        "swing": 0,
+        "latency": 0.16680000000075523,
+        "lateContacts": 2
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          6,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 10,
+        "rally": 7,
+        "p": {
+          "x": 0,
+          "y": 0.9914999672682321,
+          "z": -1.4479111940916412
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.1819128063043705,
+          "z": -1.664156529422239
+        },
+        "swing": 0,
+        "latency": 0.1573000000007454,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          6,
+          1
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 13,
+        "rally": 8,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.37686447888938,
+          "z": -3.871901535975297
+        },
+        "swing": 0,
+        "latency": 0.16119999999925483,
+        "lateContacts": 4
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          6,
+          1
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 13,
+        "rally": 8,
+        "p": {
+          "x": -0.6220799999356271,
+          "y": 1.0656800827915758,
+          "z": 0.5719084321478949
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.37686447888938,
+          "z": -3.871901535975297
+        },
+        "swing": 0,
+        "latency": 0.17239999999850752,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 1,
+      "a": {
+        "side": 0,
+        "score": [
+          7,
+          1
+        ],
+        "server": 0,
+        "phase": "fin",
+        "last": 1,
+        "bounces": 0,
+        "stage": 2,
+        "hits": 14,
+        "rally": 9,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1.9077298925313513,
+          "z": 5.585908858724666
+        },
+        "swing": 0,
+        "latency": 0.16680000000074457,
+        "lateContacts": 5
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          7,
+          1
+        ],
+        "server": 0,
+        "phase": "fin",
+        "last": 1,
+        "bounces": 0,
+        "stage": 2,
+        "hits": 14,
+        "rally": 9,
+        "p": {
+          "x": 0,
+          "y": 1.2988216984123815,
+          "z": 4.247364690822729
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1.9077298925313513,
+          "z": 5.585908858724666
+        },
+        "swing": 0,
+        "latency": 0.16239999999850951,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 2,
+      "a": {
+        "side": 0,
+        "score": [
+          1,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 2,
+        "rally": 10,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.10066201919045,
+          "z": 3.8947701894917754
+        },
+        "swing": 0,
+        "latency": 0.16669999999926688,
+        "lateContacts": 6
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          1,
+          0
+        ],
+        "server": 0,
+        "phase": "punto",
+        "last": 1,
+        "bounces": 0,
+        "stage": 0,
+        "hits": 2,
+        "rally": 10,
+        "p": {
+          "x": 0,
+          "y": 0.9793521630511595,
+          "z": 0.22781782235412715
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.10066201919045,
+          "z": 3.8947701894917754
+        },
+        "swing": 0.2507000000029802,
+        "latency": 0.17180000000074713,
+        "lateContacts": 0
+      },
+      "agreed": true
+    },
+    {
+      "match": 2,
+      "a": {
+        "side": 0,
+        "score": [
+          2,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 3,
+        "rally": 11,
+        "p": {
+          "x": -1.08,
+          "y": 1.08,
+          "z": 1.3
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.0475409618375893,
+          "z": -1.694062726448747
+        },
+        "swing": 0,
+        "latency": 0.18160000000150234,
+        "lateContacts": 6
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          2,
+          0
+        ],
+        "server": 1,
+        "phase": "punto",
+        "last": 0,
+        "bounces": 2,
+        "stage": 0,
+        "hits": 3,
+        "rally": 11,
+        "p": {
+          "x": 0,
+          "y": 0.9816311181613175,
+          "z": -1.4712147430283506
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.0475409618375893,
+          "z": -1.694062726448747
+        },
+        "swing": 0,
+        "latency": 0.16669999999924556,
+        "lateContacts": 0
+      },
+      "agreed": true
+    }
+  ],
+  "inputs": [
+    {
+      "match": 1,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "devolución",
+      "hits": 1
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "devolución",
+      "hits": 2
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "devolución",
+      "hits": 2
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "devolución",
+      "hits": 5
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "devolución",
+      "hits": 7
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "devolución",
+      "hits": 9
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "devolución",
+      "hits": 10
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "saque"
+    },
+    {
+      "match": 1,
+      "side": 0,
+      "action": "devolución",
+      "hits": 12
+    },
+    {
+      "match": 1,
+      "side": 1,
+      "action": "saque"
+    },
+    {
+      "match": 2,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 2,
+      "side": 1,
+      "action": "devolución",
+      "hits": 1
+    },
+    {
+      "match": 2,
+      "side": 1,
+      "action": "devolución",
+      "hits": 1
+    },
+    {
+      "match": 2,
+      "side": 0,
+      "action": "saque"
+    },
+    {
+      "match": 2,
+      "side": 1,
+      "action": "devolución",
+      "hits": 3
+    }
+  ],
+  "hostExit": "El anfitrión salió. Crea una sala nueva. · CPU local disponible.",
+  "errors": []
+}

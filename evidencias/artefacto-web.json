@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-16T21:00:39.060Z",
-  "url": "http://localhost:4173/",
+  "date": "2026-11-16T21:24:57.406Z",
+  "url": "https://rebote-de-cristal-160ydy19qg7w.needle.run/",
   "result": {
     "baked": true,
     "environment": true,
@@ -41,9 +41,9 @@
     "proceduralArchitecture": false,
     "authoringEquipment": false,
     "render": {
-      "frame": 213,
+      "frame": 218,
       "calls": 63,
-      "triangles": 15398,
+      "triangles": 15318,
       "points": 0,
       "lines": 0
     },

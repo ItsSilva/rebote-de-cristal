@@ -1,6 +1,6 @@
 # Portafolio preparado para el equipo
 
-**Estado:** texto y selección de evidencias preparados. Sin publicación ni enlace Behance confirmado. Cada integrante debe revisar sus aportes reales antes de publicar.
+**Estado:** texto y selección de evidencias preparados. Sin publicación: el usuario pidió conservarlo preparado en archivos. Cada integrante debe revisar sus aportes reales antes de publicar.
 
 ## Portada
 
@@ -8,7 +8,11 @@
 
 Una antigua estación de extracción convertida en club de tenis de mesa. Roca facetada, protecciones neumáticas y un autómata de fuelle conviven alrededor de una mesa a escala humana. Una experiencia WebXR en Needle Engine, con CPU y salas de dos personas.
 
-Usar una captura real del build final, no una imagen conceptual: `evidencias/03-cancha-escritorio.png` o su sustitución final. Añadir el enlace estable de Needle Cloud consignado en `docs/ENTREGA.md`.
+![Captura real del build publicado en Needle Cloud](../evidencias/08-build-final.png)
+
+Captura de escritorio; no es un POV de visor.
+
+Usar una captura real del build final, no una imagen conceptual: `evidencias/08-build-final.png`. Enlace estable: https://rebote-de-cristal-160ydy19qg7w.needle.run/; fuentes: https://github.com/ItsSilva/rebote-de-cristal.
 
 ## El reto
 
@@ -22,11 +26,19 @@ Mesa de 2,74 × 1,525 m, superficie a 0,76 m; red de 0,1525 m; pelota de 0,04 m 
 
 Mostrar la escena Unity `ReboteDeCristal.unity`, la captura `04-unity-escala.png` y una comparación real de altura de la mesa en visor que todavía debe grabar el equipo.
 
+![Escena real renderizada por Unity después del bake](../evidencias/04-unity-escala.png)
+
 ## Construcción de los assets
 
 Las fuentes editables son `web/src/world.ts` y `Unity/Assets/Source/cancha.json`. Las mallas y materiales importados son persistentes y el proyecto abre sin Blender. La pala combina un mango explícito, cabeza acolchada, caras de golpe, costura y válvula. La roca conserva planos grandes. El autómata usa pliegues rígidos y una expansión visual pequeña; no se simula tela durante el juego.
 
-Proceso de textura: la superficie detallada del tejido se muestrea fuera del runtime y se transfiere a normal y oclusión de 1024 px. El entorno se hornea además en Unity con Progressive CPU y UV2. Mostrar el mapa `fabric-normal.png`, su AO, `uv2-atlas-unity.png`, el lightmap y el asset dentro del build. Explicar la diferencia entre estos mapas y una medición de FPS.
+![Los tres assets originales con materiales](../evidencias/09-assets-materiales.png)
+
+![Las mismas mallas en alambre](../evidencias/10-assets-alambre.png)
+
+La pala aparece ampliada 2,1 veces únicamente en estas láminas de inspección. El juego conserva su escala en metros.
+
+Proceso de textura: la superficie detallada del tejido se muestrea fuera del runtime y se transfiere a normal y oclusión de 1024 px. El entorno se hornea además en Unity con Progressive CPU y UV2. Mostrar las vistas `09-assets-materiales.png` y `10-assets-alambre.png`, el mapa `fabric-normal.png`, su AO, `uv2-atlas-unity.png`, `atlas-unity.png` y el asset dentro del build. Explicar la diferencia entre estos mapas y una medición de FPS.
 
 ## Interacción y red
 
@@ -40,7 +52,7 @@ Cambios documentados a partir de pruebas reales de desarrollo:
 - Se agrupó geometría estática para reducir llamadas de dibujo.
 - Se corrigió el saque que golpeaba la red por exceso de velocidad.
 - Se corrigió la elección de anfitrión: la lista de Needle pone primero al propio cliente, por lo que ese índice no representa el orden de ingreso.
-- Se añadió ping, compensación de reloj y validación histórica de contacto para que el invitado pudiera devolver.
+- Se añadió ping, compensación de reloj y validación histórica de contacto para que el invitado pudiera devolver y sacar con retardo. Se verificaron diez puntos por HTTPS con ambos marcadores y servicios de acuerdo.
 - Se cambió el bake de Unity a codificación normal, exigida por el exportador de Needle.
 
 ## Rendimiento y resultado
@@ -58,3 +70,4 @@ Insertar el POV real de 1–2 minutos y los enlaces verificados de GitHub y Need
 | Isa Cabrera Sogamoso (isabellcabrera3) | Por confirmar | Pendiente de declaración de la integrante | Pendiente |
 
 Declarar la asistencia de Codex en código, autoría procedural, pruebas y documentación. Distinguir esa asistencia de las decisiones y el trabajo humano que realmente realizó cada persona. No asignar tareas a alguien solo porque su nombre aparece en la cuenta de publicación.
+

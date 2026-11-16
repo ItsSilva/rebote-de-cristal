@@ -2,6 +2,8 @@
 
 Juego de tenis de mesa arcade para la ruta A del parcial: **Needle Engine y publicación en Needle Cloud**. Interfaz y documentación en español. El origen está en el suelo bajo el centro de la mesa; Y es altura, Z es el eje longitudinal, A juega desde +Z y B desde -Z. Unidades: metros.
 
+[Jugar en Needle Cloud](https://rebote-de-cristal-160ydy19qg7w.needle.run/) · [Repositorio GitHub](https://github.com/ItsSilva/rebote-de-cristal) · [Resultados y pendientes](docs/ENTREGA.md)
+
 ## Abrir y jugar
 
 Desde `web/`, con Node 24:
@@ -25,7 +27,7 @@ Vite redirige `/socket` al puerto 8787. La opción `VITE_NETWORK_URL` permite se
 
 ## RV y RM
 
-Abrir la experiencia por HTTPS en un navegador con WebXR. Las opciones RV y RM se detectan por separado. En RV: agarre del controlador toma o devuelve la pala; gatillo acciona el panel espacial o prepara el saque; mover físicamente la pala devuelve la pelota. El panel permite pausar, recuperar, cambiar modo, iniciar revancha, desplazarse y salir de XR. Pinza con seguimiento de manos es una implementación experimental: **pendiente de probar en visor**.
+Abrir la experiencia por HTTPS en un navegador con WebXR. Las opciones RV y RM se detectan por separado. En RV: agarre cerca del mango toma o devuelve la pala; el panel permite recuperarla a distancia; gatillo acciona el panel espacial o prepara el saque; mover físicamente la pala devuelve la pelota. El panel permite pausar, recuperar, cambiar modo, iniciar revancha, desplazarse y salir de XR. Pinza con seguimiento de manos es una implementación experimental: **pendiente de probar en visor**.
 
 En RM, usar «Colocar RM», «Girar RM» y «Confirmar RM» en el panel. Se intenta hit test; hay colocación manual si no se obtiene superficie. Se oculta la cantera y se conservan mesa, pelota, palas y panel. Escala compartida 1:1. **Passthrough, alineación de dos visores y confort siguen pendientes de validación física.**
 
@@ -65,4 +67,5 @@ La matriz y los resultados definitivos se mantienen en `docs/MATRIZ.md` y `docs/
 Escenario, palas, dispensador y autómata generados para este proyecto mediante código editable asistido por Codex. No se copiaron emblemas ni el personaje de la referencia inflable. Las imágenes de referencia y el brief permanecen en la carpeta de trabajo y se excluyen del repositorio por no haberse confirmado su licencia de redistribución. Los tres integrantes están registrados; el equipo debe completar los aportes reales y créditos en `docs/BEHANCE.md`.
 
 Base técnica: [plantilla Vite oficial de Needle](https://github.com/needle-engine/vite-template), [Needle para Unity](https://engine.needle.tools/docs/unity/), [networking](https://engine.needle.tools/docs/how-to-guides/networking/setup), [XR](https://engine.needle.tools/docs/how-to-guides/xr/index.html) y [publicación](https://engine.needle.tools/docs/cloud/).
+
 
