@@ -22,6 +22,8 @@ El build corresponde al código `9fbca9aa3d39`. El archivo público `include/bui
 
 Los registros de `evidencias/` contienen URL, método y resultado. Las capturas son de escritorio. `MATRIZ.md` relaciona cada requisito con su prueba y su límite.
 
+[GitHub Actions aprobado en Ubuntu](https://github.com/ItsSilva/rebote-de-cristal/actions/runs/43961299939): instalación limpia, tipos, nueve pruebas y compilación. Registro en `evidencias/ci-verificado.json`. La optimización autenticada de producción se ejecutó localmente y se verificó en Needle Cloud.
+
 ## Lo que debe comprobar el equipo con el visor
 
 Usar `PRUEBAS_VISOR.md` para registrar el modelo, navegador, fecha y revisión. Falta comprobar agarre cercano, orientación física de la pala, controladores de ambas manos, vibración, pinza experimental, tracking, lectura del marcador y confort. En RM faltan passthrough, suelo, colocación, giro y alineación entre dos habitaciones. Repetir CPU completa y diez puntos PvP con dos visores y redes distintas.
