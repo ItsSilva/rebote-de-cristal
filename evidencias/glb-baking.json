@@ -1,0 +1,20 @@
+{
+  "source": "web/assets/ReboteDeCristal.glb",
+  "extensions": [
+    "NEEDLE_components",
+    "NEEDLE_gameobject_data",
+    "NEEDLE_progressive_mesh_settings",
+    "KHR_texture_transform",
+    "KHR_lights_punctual",
+    "EXT_texture_exr",
+    "NEEDLE_lightmaps",
+    "NEEDLE_lighting_settings"
+  ],
+  "lightmap": "Lightmap-0",
+  "bytes": 155456,
+  "groups": [
+    "CanteraUnity",
+    "Cantera_Entorno",
+    "Cancha_Arquitectura"
+  ]
+}

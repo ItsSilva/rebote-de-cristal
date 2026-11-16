@@ -1,0 +1,16 @@
+{
+  "sceneName": "Rebote De Cristal",
+  "meta": null,
+  "absolutePath": null,
+  "deployOnly": false,
+  "needleEditor": null,
+  "allowHotReload": true,
+  "generator": "Unity 6000.3.28f1, Needle Engine Integration @5.1.16",
+  "developmentBuild": true,
+  "license": {
+    "team": "eo3cwlpboqxn"
+  },
+  "gzip": false,
+  "facebookInstantGames": null,
+  "useRapier": true
+}

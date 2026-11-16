@@ -1,0 +1,6 @@
+* text=auto
+Unity/** -whitespace
+*.png binary
+*.glb binary
+*.exr binary
+*.lighting binary

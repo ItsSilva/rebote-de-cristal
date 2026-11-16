@@ -1,0 +1,11 @@
+{
+  "method": "Offline sampling, parametric detailed fabric to tangent-space normal and cavity AO; static projected floor occlusion",
+  "resolution": 1024,
+  "maps": [
+    "fabric-normal.png",
+    "fabric-ao.png",
+    "court-baked.png"
+  ],
+  "unityLightmap": "separate pending verification",
+  "source": "tools/bake.py"
+}

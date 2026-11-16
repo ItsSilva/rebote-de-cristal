@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#172238" />
+    <title>Rebote de Cristal · Club de Cantera</title>
+    <meta
+      name="description"
+      content="Un club de ping-pong entre cristales. Juega contra el autómata o invita a otra persona en WebXR."
+    />
+  </head>
+  <body>
+    <needle-engine
+      src="./assets/ReboteDeCristal.glb"
+      camera-controls="0"
+      background-color="#172238"
+    ></needle-engine>
+    <header>
+      <a class="brand" href="./"
+        ><span class="gem">◇</span><span>REBOTE<br /><b>DE CRISTAL</b></span></a
+      >
+      <div class="edition">CLUB DE CANTERA <span>EST. 07 / WEBXR</span></div>
+      <div class="xr">
+        <button id="vr" data-action="vr" disabled>Comprobando RV</button
+        ><button id="ar" data-action="ar" disabled>Comprobando RM</button>
+      </div>
+    </header>
+    <aside id="controls">
+      <p class="eyebrow">01 — ENTRA EN LA CANCHA</p>
+      <h1>Un buen punto<br />empieza contigo.</h1>
+      <p class="intro">
+        Piedra, aire y un pequeño rival mineral.<br />La mesa está lista.
+      </p>
+      <div class="scorecard">
+        <span>A / TÚ</span><strong id="score">0 : 0</strong
+        ><span>B / RIVAL</span><small id="turn">Saque A · CPU</small>
+      </div>
+      <p id="phase" role="status">Toma la pala y prepara el saque.</p>
+      <div class="primary-actions">
+        <button data-action="grab" class="primary">
+          Tomar / recuperar pala <kbd>G</kbd></button
+        ><button data-action="serve">Preparar saque <kbd>ESPACIO</kbd></button
+        ><button data-action="pause">Pausa / continuar <kbd>P</kbd></button>
+      </div>
+      <details>
+        <summary>
+          Partida y sala <span id="room">CPU local · sin sala</span>
+        </summary>
+        <div class="grid">
+          <button data-action="now">Jugar ahora</button
+          ><button data-action="cpu">Contra CPU</button
+          ><button data-action="wait">Esperar rival</button
+          ><button data-action="ready">Listo PvP</button
+          ><button data-action="copy">Copiar invitación</button
+          ><button data-action="rematch">Revancha</button
+          ><button data-action="local">CPU local</button>
+        </div>
+        <form id="join">
+          <input
+            id="code"
+            aria-label="Código de sala"
+            placeholder="Código de sala"
+            minlength="4"
+            maxlength="24"
+          /><button>Entrar</button>
+        </form>
+      </details>
+      <details>
+        <summary>Recorrido y confort</summary>
+        <div class="grid">
+          <button data-action="entry">1 · Entrada</button
+          ><button data-action="bench">2 · Banco</button
+          ><button data-action="play">3 · Puesto</button
+          ><button data-action="hand">Mano D / I</button
+          ><button data-action="seated">Sentado / pie</button
+          ><button data-action="center">Recentrar</button
+          ><button data-action="measure">Registrar cuadros</button>
+        </div>
+        <p>Flechas ↑ ↓: acercar o alejar el puesto.</p>
+      </details>
+    </aside>
+    <div id="hint">
+      <span class="eyebrow">TU PRÓXIMO MOVIMIENTO</span>
+      <p id="message" aria-live="polite">
+        Toma la pala. Activa el saque. Devuelve tras el primer bote.
+      </p>
+      <small
+        >Ratón: mover · Clic / Enter: golpe · Rueda: ángulo · Shift: fuerza · RV: agarre y gatillo</small
+      >
+    </div>
+    <footer>
+      <span>ARCÁDE A 7 · DIFERENCIA DE 2</span
+      ><span id="performance">Midiendo cuadros…</span
+      ><span>1:1 · HECHO PARA EXPLORAR</span>
+    </footer>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

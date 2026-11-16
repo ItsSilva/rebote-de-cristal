@@ -1,0 +1,279 @@
+{
+  "method": "Dos contextos Brave independientes; entradas de teclado y ratón. Tercero rechazado.",
+  "code": "QA-MWJHM5A9",
+  "ready": [
+    {
+      "side": 0,
+      "club": {
+        "session": "864fabb0-5d11-4e6c-8a3b-a0d42b91d20d",
+        "host": "fc61397f-814c-407f-bb9e-76f280bc87f9",
+        "seats": [
+          "fc61397f-814c-407f-bb9e-76f280bc87f9",
+          "82b383ed-6e46-4772-806c-eb45148cf1be"
+        ],
+        "mode": "pvp",
+        "ready": [
+          true,
+          true
+        ],
+        "revision": 3,
+        "closed": false
+      },
+      "score": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": 1,
+      "club": {
+        "session": "864fabb0-5d11-4e6c-8a3b-a0d42b91d20d",
+        "host": "fc61397f-814c-407f-bb9e-76f280bc87f9",
+        "seats": [
+          "fc61397f-814c-407f-bb9e-76f280bc87f9",
+          "82b383ed-6e46-4772-806c-eb45148cf1be"
+        ],
+        "mode": "pvp",
+        "ready": [
+          true,
+          true
+        ],
+        "revision": 3,
+        "closed": false
+      },
+      "score": [
+        0,
+        0
+      ]
+    }
+  ],
+  "returned": true,
+  "log": [
+    {
+      "a": {
+        "side": 0,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "saque",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.1973071472126497,
+          "z": 1.1
+        },
+        "swing": 0.001,
+        "hits": 0
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "saque",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.1811351298133694,
+          "z": 1.1
+        },
+        "swing": 0,
+        "hits": 0
+      }
+    },
+    {
+      "a": {
+        "side": 0,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "juego",
+        "last": 0,
+        "bounces": 0,
+        "stage": 1,
+        "p": {
+          "x": 0,
+          "y": 1.1865984842703468,
+          "z": 1.0938281410176338
+        },
+        "swing": 0.08429999999981372,
+        "hits": 1
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "saque",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.199327016512118,
+          "z": 1.1
+        },
+        "swing": 0,
+        "hits": 0
+      }
+    },
+    {
+      "a": {
+        "side": 0,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "juego",
+        "last": 1,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.0939896311501796,
+          "z": -0.9130137913240056
+        },
+        "swing": 0,
+        "hits": 2
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "juego",
+        "last": 0,
+        "bounces": 1,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.0500064021845825,
+          "z": -1.0150231538594456
+        },
+        "swing": 0.12840000000037252,
+        "hits": 1
+      }
+    },
+    {
+      "a": {
+        "side": 0,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "juego",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.092698389985107,
+          "z": 1.2197106912648497
+        },
+        "swing": 0,
+        "hits": 3
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          0,
+          0
+        ],
+        "phase": "juego",
+        "last": 1,
+        "bounces": 1,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 1.0710018773719225,
+          "z": 1.1133388926206806
+        },
+        "swing": 0,
+        "hits": 2
+      }
+    },
+    {
+      "a": {
+        "side": 0,
+        "score": [
+          0,
+          1
+        ],
+        "phase": "punto",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 0.781,
+          "z": 0.042619573347519236
+        },
+        "swing": 0,
+        "hits": 3
+      },
+      "b": {
+        "side": 1,
+        "score": [
+          0,
+          1
+        ],
+        "phase": "punto",
+        "last": 0,
+        "bounces": 0,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 0.781,
+          "z": 0.042619573347519236
+        },
+        "swing": 0,
+        "hits": 3
+      }
+    }
+  ],
+  "final": [
+    {
+      "score": [
+        0,
+        1
+      ],
+      "hits": 3,
+      "phase": "punto",
+      "reason": "Campo incorrecto"
+    },
+    {
+      "score": [
+        0,
+        1
+      ],
+      "hits": 3,
+      "phase": "punto",
+      "reason": "Campo incorrecto"
+    }
+  ],
+  "departure": {
+    "session": "864fabb0-5d11-4e6c-8a3b-a0d42b91d20d",
+    "host": "fc61397f-814c-407f-bb9e-76f280bc87f9",
+    "seats": [
+      "fc61397f-814c-407f-bb9e-76f280bc87f9",
+      null
+    ],
+    "mode": "esperar",
+    "ready": [
+      false,
+      false
+    ],
+    "revision": 4,
+    "closed": false
+  },
+  "errors": []
+}

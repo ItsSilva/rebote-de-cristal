@@ -1,0 +1,323 @@
+{
+  "method": "Teclado y ratón vía Playwright, sin modificar marcador ni trayectoria",
+  "url": "http://localhost:4173/",
+  "served": 2,
+  "returnActions": 2,
+  "humanReturned": true,
+  "result": {
+    "score": [
+      2,
+      0
+    ],
+    "hits": 7,
+    "reason": "Volea",
+    "phase": "punto"
+  },
+  "log": [
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 0,
+      "bounces": 0,
+      "stage": 1,
+      "p": {
+        "x": 0,
+        "y": 1.1820361714038254,
+        "z": 1.0936551022398662
+      },
+      "velocity": {
+        "x": 0,
+        "y": -1.725748156814634,
+        "z": -2.1630748584814112
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.1899930067106481,
+        "z": 1.1248763161204132
+      },
+      "score": [
+        0,
+        0
+      ],
+      "hits": 1,
+      "reason": "Golpea la bola: primero tu campo, después el contrario.",
+      "swing": 0.08440000000223517,
+      "time": 0.9666666666666657
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 1,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 1.1595722869500202,
+        "z": -0.8718299134974666
+      },
+      "velocity": {
+        "x": 0,
+        "y": 2.288287018195642,
+        "z": 2.5956702757724406
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.0422222232385256,
+        "z": 1.2399999973377511
+      },
+      "score": [
+        0,
+        0
+      ],
+      "hits": 2,
+      "reason": "Golpea la bola: primero tu campo, después el contrario.",
+      "swing": 0,
+      "time": 1.9833333333333287
+    },
+    {
+      "returnInput": {
+        "phase": "juego",
+        "server": 0,
+        "last": 1,
+        "bounces": 1,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 0.8655701023804288,
+          "z": 0.6784300866685995
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.8417005055795896,
+          "z": 2.3916306278674817
+        },
+        "paddle": {
+          "x": 0,
+          "y": 1.0422222222222228,
+          "z": 1.2399999999999982
+        },
+        "score": [
+          0,
+          0
+        ],
+        "hits": 2,
+        "reason": "Devuelve después del bote",
+        "swing": 0,
+        "time": 2.5999999999999934
+      }
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 0,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 1.2332326911436688,
+        "z": 0.8294655660280497
+      },
+      "velocity": {
+        "x": 0,
+        "y": 1.2576439680501625,
+        "z": -4.282980112515311
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.1336057332300191,
+        "z": 0.9891136363648212
+      },
+      "score": [
+        0,
+        0
+      ],
+      "hits": 3,
+      "reason": "Devuelve después del bote",
+      "swing": 0.15769999999925494,
+      "time": 2.7916666666666594
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 1,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 1.0186010241564094,
+        "z": -1.0919954363901574
+      },
+      "velocity": {
+        "x": 0,
+        "y": 5.551312228881208,
+        "z": 2.5935081182333963
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.2266340139521743,
+        "z": 1.239945666224542
+      },
+      "score": [
+        0,
+        0
+      ],
+      "hits": 4,
+      "reason": "Devuelve después del bote",
+      "swing": 0,
+      "time": 3.299999999999991
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 0,
+      "bounces": 0,
+      "stage": 1,
+      "p": {
+        "x": 0,
+        "y": 1.1724139430228149,
+        "z": 1.0855130560918578
+      },
+      "velocity": {
+        "x": 0,
+        "y": -1.8315723680966371,
+        "z": -2.2077818329889376
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.1855258651718994,
+        "z": 1.116290245436642
+      },
+      "score": [
+        1,
+        0
+      ],
+      "hits": 5,
+      "reason": "Golpea la bola: primero tu campo, después el contrario.",
+      "swing": 0.08980000000074506,
+      "time": 6.5416666666667815
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 1,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 1.1277678192510079,
+        "z": -0.902801310604638
+      },
+      "velocity": {
+        "x": 0,
+        "y": 2.707703036343994,
+        "z": 2.6
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.0422222240492482,
+        "z": 1.2399999952836114
+      },
+      "score": [
+        1,
+        0
+      ],
+      "hits": 6,
+      "reason": "Golpea la bola: primero tu campo, después el contrario.",
+      "swing": 0,
+      "time": 7.508333333333496
+    },
+    {
+      "returnInput": {
+        "phase": "juego",
+        "server": 0,
+        "last": 1,
+        "bounces": 1,
+        "stage": 0,
+        "p": {
+          "x": 0,
+          "y": 0.8089937026209766,
+          "z": 0.7526171510264759
+        },
+        "velocity": {
+          "x": 0,
+          "y": 3.14971452477702,
+          "z": 2.38565901891921
+        },
+        "paddle": {
+          "x": 0,
+          "y": 1.0422222222222224,
+          "z": 1.2399999999999995
+        },
+        "score": [
+          1,
+          0
+        ],
+        "hits": 6,
+        "reason": "Devuelve después del bote",
+        "swing": 0,
+        "time": 8.166666666666844
+      }
+    },
+    {
+      "phase": "juego",
+      "server": 0,
+      "last": 0,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 1.1703056203728215,
+        "z": 0.9391476536779655
+      },
+      "velocity": {
+        "x": 0,
+        "y": 1.9725583749961524,
+        "z": -4.24280382241519
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.0911582238126762,
+        "z": 1.0584772727308285
+      },
+      "score": [
+        1,
+        0
+      ],
+      "hits": 7,
+      "reason": "Devuelve después del bote",
+      "swing": 0.11409999999776482,
+      "time": 8.316666666666835
+    },
+    {
+      "phase": "punto",
+      "server": 1,
+      "last": 0,
+      "bounces": 0,
+      "stage": 0,
+      "p": {
+        "x": 0,
+        "y": 0.863892877991942,
+        "z": -1.1858930040044486
+      },
+      "velocity": {
+        "x": 0,
+        "y": -3.0645010612468995,
+        "z": -4.0291589741441705
+      },
+      "paddle": {
+        "x": 0,
+        "y": 1.1944292853812628,
+        "z": 1.2398714445825756
+      },
+      "score": [
+        2,
+        0
+      ],
+      "hits": 7,
+      "reason": "Volea",
+      "swing": 0,
+      "time": 8.833333333333472
+    }
+  ],
+  "errors": []
+}

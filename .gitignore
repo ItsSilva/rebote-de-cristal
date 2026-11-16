@@ -1,0 +1,22 @@
+**/node_modules/
+**/dist/
+**/Library/
+**/Temp/
+**/Logs/
+**/UserSettings/
+**/obj/
+**/.needle/
+.env*
+!.env.example
+*.log
+referencias/
+tmp/
+web/.agents/
+/Unity/New Unity Project/
+/web/.github/
+/PROMPT_CODEX_PARCIAL_3.md
+/evidencias/brief-*
+/web/include/build-info.json
+/web/tests/inspect-score.mjs
+/web/tests/diagnose-*.mjs
+/evidencias/diagnostico-*.png

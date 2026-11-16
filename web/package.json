@@ -1,0 +1,36 @@
+{
+  "name": "rebote-de-cristal",
+  "version": "0.1.0",
+  "scripts": {
+    "prebuild": "node ../tools/stamp-build.mjs",
+    "dev": "vite --host",
+    "start": "npm run dev",
+    "build": "vite build -- --production",
+    "build:production": "npm run build",
+    "build:dev": "vite build",
+    "deploy": "npx --yes needle-cloud deploy dist --name rebote-de-cristal --team eo3cwlpboqxn --non-interactive true --open false",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "server": "tsx server/server.ts",
+    "preview": "vite preview --host --port 4173"
+  },
+  "dependencies": {
+    "@needle-tools/engine": "5.1.16",
+    "three": "npm:@needle-tools/three@0.169.19",
+    "ws": "8.23.0"
+  },
+  "devDependencies": {
+    "@needle-tools/helper": "^1.11.4",
+    "@types/node": "24.10.1",
+    "@types/three": "0.169.0",
+    "@types/ws": "8.18.1",
+    "@vitejs/plugin-basic-ssl": "2",
+    "playwright": "1.56.1",
+    "tsx": "4.20.6",
+    "typescript": "^5.0.4",
+    "vite": "8.1.7"
+  },
+  "overrides": { "rolldown": "1.1.4" },
+  "author": "Equipo Rebote de Cristal (aportes en docs/BEHANCE.md)",
+  "type": "module"
+}

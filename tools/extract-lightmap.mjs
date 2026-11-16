@@ -1,0 +1,10 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const raw=readFileSync(new URL('../web/assets/ReboteDeCristal.glb',import.meta.url));
+const length=raw.readUInt32LE(12),json=JSON.parse(raw.toString('utf8',20,20+length));
+const binary=20+length+8;
+const im=json.images.find(i=>i.name==='Lightmap-0');
+if(!im)throw new Error('El GLB no contiene el lightmap de Unity');
+const view=json.bufferViews[im.bufferView];
+writeFileSync(new URL('../evidencias/atlas-unity.png',import.meta.url),raw.subarray(binary+(view.byteOffset||0),binary+(view.byteOffset||0)+view.byteLength));
+writeFileSync(new URL('../evidencias/glb-baking.json',import.meta.url),JSON.stringify({source:'web/assets/ReboteDeCristal.glb',extensions:json.extensionsUsed,lightmap:im.name,bytes:view.byteLength,groups:json.nodes.filter(n=>['CanteraUnity','Cantera_Entorno','Cancha_Arquitectura'].includes(n.name)).map(n=>n.name)},null,2));
+console.log('Lightmap real extraído del GLB: '+view.byteLength+' bytes');
