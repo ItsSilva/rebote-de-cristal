@@ -539,14 +539,20 @@ class Game {
             this.swingStrength *
             Math.min(1, this.swing / 0.22),
       };
-      if (this.sim.rules.phase === "saque") pos.y = this.sim.p.y;
+      if (this.sim.rules.phase === "saque")
+        pos.y =
+          !this.net.host && this.predictedGuest
+            ? this.predictedGuest.y
+            : this.sim.p.y;
       if (this.swing > 0.29) this.swing = 0;
     } else {
       const serving = this.sim.rules.phase === "saque";
       const base = serving
         ? v(
             clamp(this.pointer.x * 0.8, -0.6, 0.6),
-            this.sim.p.y,
+            !this.net.host && this.predictedGuest
+              ? this.predictedGuest.y
+              : this.sim.p.y,
             1.26 * this.sign,
           )
         : v(
@@ -659,13 +665,13 @@ class Game {
     for (let i = 0; i < this.history.length - 1; i++) {
       const a = this.history[i],
         b = this.history[i + 1];
-      if (
-        Math.abs(a.time - d.time) > 0.045 ||
-        a.rules.phase !== "juego" ||
-        a.rules.last !== 0 ||
-        a.rules.bounces !== 1 ||
-        a.rules.serveStage !== 0
-      )
+      const serving = a.rules.phase === "saque" && a.rules.server === 1;
+      const returning =
+        a.rules.phase === "juego" &&
+        a.rules.last === 0 &&
+        a.rules.bounces === 1 &&
+        a.rules.serveStage === 0;
+      if (Math.abs(a.time - d.time) > 0.045 || (!serving && !returning))
         continue;
       const p = {
         ...this.sim.paddles[1],
@@ -685,7 +691,7 @@ class Game {
       this.sim.p = { ...hit.point };
       this.sim.paddles[1] = p;
       if (!this.sim.rules.hit(1)) return;
-      this.sim.reflect(1, hit.normal, p);
+      this.sim.reflect(1, hit.normal, p, serving);
       this.sim.cooldown[1] = 0.1;
       this.sim.sound("pala", 1);
       for (let t = a.time; t < now; t += SIZE.step) this.sim.step();
@@ -736,12 +742,15 @@ class Game {
         vel = this.sim.velocity;
       const predicted = predictBall(p, vel, elapsed);
       const r = this.sim.rules;
+      const canContact =
+        (r.phase === "saque" && r.server === this.side) ||
+        (r.phase === "juego" &&
+          r.last === 0 &&
+          r.bounces === 1 &&
+          r.serveStage === 0);
       if (
         this.held &&
-        r.phase === "juego" &&
-        r.last === 0 &&
-        r.bounces === 1 &&
-        r.serveStage === 0 &&
+        canContact &&
         this.guestBall &&
         this.guestContact !== r.revision
       ) {
