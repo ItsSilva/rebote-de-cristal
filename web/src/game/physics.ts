@@ -77,6 +77,8 @@ export class Simulation {
   age = 0;
   pointAge = 0;
   cpu = true;
+  /** Dificultad de la CPU: 0 fácil, 1 normal (la de la entrega), 2 difícil. */
+  cpuLevel: 0 | 1 | 2 = 1;
   cpuClock = 0;
   events: { kind: string; id: number; side?: Side }[] = [];
   eventId = 0;
@@ -265,11 +267,16 @@ export class Simulation {
       t = clamp(time, 0, 0.65);
     // Reach and reaction are deliberately bounded. Error varies by rally; no teleport.
     this.cpuClock += dt;
-    if (this.cpuClock < 0.14) return;
+    const level = this.cpuLevel,
+      reaction = [0.26, 0.14, 0.09][level],
+      botSpeed = [1.3, 1.8, 2.3][level],
+      slip = [0.32, 0.18, 0.07][level],
+      wobble = [0.05, 0.025, 0.012][level];
+    if (this.cpuClock < reaction) return;
     const miss =
       this.rules.rally % 5 === 0
-        ? 0.18
-        : 0.025 * Math.sin(this.rules.rally * 2.1);
+        ? slip
+        : wobble * Math.sin(this.rules.rally * 2.1);
     let y = this.p.y + this.velocity.y * t - 4.905 * t * t;
     if (y < 0.8) y = 0.8 + (0.8 - y) * 0.75;
     const stroke =
@@ -281,7 +288,7 @@ export class Simulation {
       clamp(y, 0.85, 1.35),
       stroke ? -0.9 : -1.24,
     );
-    this.moveBot(target, norm(v(0, 0.6, 1)), dt, 1.8);
+    this.moveBot(target, norm(v(0, 0.6, 1)), dt, botSpeed);
   }
   moveBot(target: V, n: V, dt: number, speed: number) {
     const p = this.paddles[1],

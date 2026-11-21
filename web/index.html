@@ -11,37 +11,42 @@
     />
   </head>
   <body>
-    <needle-engine
-      src="./assets/ReboteDeCristal.glb"
-      camera-controls="0"
-      background-color="#172238"
-    ></needle-engine>
+    <main>
+      <needle-engine
+        src="./assets/ReboteDeCristal.glb"
+        camera-controls="0"
+        background-color="#172238"
+      ></needle-engine>
+    </main>
     <header>
+      <a class="skip" href="#controls">Saltar a los controles</a>
       <a class="brand" href="./"
-        ><span class="gem">◇</span><span>REBOTE<br /><b>DE CRISTAL</b></span></a
+        ><span class="gem" aria-hidden="true">◇</span><span>REBOTE<br /><b>DE CRISTAL</b></span></a
       >
-      <div class="edition">CLUB DE CANTERA <span>EST. 07 / WEBXR</span></div>
+      <div class="edition">CLUB DE CANTERA <span>WebXR</span></div>
       <div class="xr">
-        <button id="vr" data-action="vr" disabled>Comprobando RV</button
+        <button type="button" data-open="settings" class="opts">Opciones</button
+        ><button id="vr" data-action="vr" disabled>Comprobando RV</button
         ><button id="ar" data-action="ar" disabled>Comprobando RM</button>
       </div>
     </header>
-    <aside id="controls">
-      <p class="eyebrow">01 — ENTRA EN LA CANCHA</p>
+    <aside id="controls" aria-label="Controles de la partida" tabindex="-1">
+      <p class="eyebrow">Entra en la cancha</p>
       <h1>Un buen punto<br />empieza contigo.</h1>
       <p class="intro">
         Piedra, aire y un pequeño rival mineral.<br />La mesa está lista.
       </p>
       <div class="scorecard">
-        <span>A / TÚ</span><strong id="score">0 : 0</strong
-        ><span>B / RIVAL</span><small id="turn">Saque A · CPU</small>
+        <span>A · tú</span><strong id="score">0 : 0</strong
+        ><span>B · rival</span><small id="turn">Saque A · CPU</small>
       </div>
       <p id="phase" role="status">Toma la pala y prepara el saque.</p>
       <div class="primary-actions">
         <button data-action="grab" class="primary">
           Tomar / recuperar pala <kbd>G</kbd></button
         ><button data-action="serve">Preparar saque <kbd>ESPACIO</kbd></button
-        ><button data-action="pause">Pausa / continuar <kbd>P</kbd></button>
+        ><button data-action="pause">Pausa / continuar <kbd>P</kbd></button
+        ><button type="button" data-open="settings">Opciones</button>
       </div>
       <details>
         <summary>
@@ -72,28 +77,111 @@
           <button data-action="entry">1 · Entrada</button
           ><button data-action="bench">2 · Banco</button
           ><button data-action="play">3 · Puesto</button
-          ><button data-action="hand">Mano D / I</button
-          ><button data-action="seated">Sentado / pie</button
-          ><button data-action="center">Recentrar</button
-          ><button data-action="measure">Registrar cuadros</button>
+          ><button data-action="center">Recentrar</button>
         </div>
         <p>Flechas ↑ ↓: acercar o alejar el puesto.</p>
       </details>
     </aside>
-    <div id="hint">
-      <span class="eyebrow">TU PRÓXIMO MOVIMIENTO</span>
+    <p id="sr-score" class="sr-only" role="status"></p>
+    <section id="hint" aria-label="Siguiente paso">
+      <span class="eyebrow">Siguiente paso</span>
       <p id="message" aria-live="polite">
         Toma la pala. Activa el saque. Devuelve tras el primer bote.
       </p>
       <small
         >Ratón: mover · Clic / Enter: golpe · Rueda: ángulo · Shift: fuerza · RV: agarre y gatillo</small
       >
-    </div>
+    </section>
     <footer>
-      <span>ARCÁDE A 7 · DIFERENCIA DE 2</span
+      <span>Partido a 7 puntos, con diferencia de 2</span
       ><span id="performance">Midiendo cuadros…</span
-      ><span>1:1 · HECHO PARA EXPLORAR</span>
+      ><span>Escala 1:1</span>
     </footer>
+    <dialog id="settings" aria-labelledby="settings-title">
+      <form id="settings-form" method="dialog">
+        <h2 id="settings-title">Opciones</h2>
+        <p class="note">Se guardan en este navegador.</p>
+
+        <fieldset>
+          <legend>Partida</legend>
+          <div class="choices" role="group" aria-label="Dificultad de la CPU">
+            <span class="label">Dificultad de la CPU</span>
+            <label><input type="radio" name="cpuLevel" value="0" />Fácil</label>
+            <label><input type="radio" name="cpuLevel" value="1" />Normal</label>
+            <label><input type="radio" name="cpuLevel" value="2" />Difícil</label>
+          </div>
+          <div class="choices" role="group" aria-label="Mano con la pala">
+            <span class="label">Mano con la pala</span>
+            <label><input type="radio" name="hand" value="right" />Derecha</label>
+            <label><input type="radio" name="hand" value="left" />Izquierda</label>
+          </div>
+          <div class="choices" role="group" aria-label="Postura">
+            <span class="label">Postura</span>
+            <label><input type="radio" name="posture" value="standing" />De pie</label>
+            <label><input type="radio" name="posture" value="seated" />Sentado</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sonido</legend>
+          <label class="row"
+            ><input type="checkbox" name="sound" />Efectos de sonido</label
+          >
+          <label class="row slider"
+            ><span>Volumen</span
+            ><input type="range" id="volume" name="volume" min="0" max="100" step="5" /><output
+              id="volume-out"
+              for="volume"
+            ></output
+          ></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pantalla</legend>
+          <div class="choices" role="group" aria-label="Tamaño del texto">
+            <span class="label">Tamaño del texto</span>
+            <label><input type="radio" name="text" value="normal" />Normal</label>
+            <label><input type="radio" name="text" value="grande" />Grande</label>
+            <label><input type="radio" name="text" value="muy-grande" />Muy grande</label>
+          </div>
+          <label class="row"
+            ><input type="checkbox" name="contrast" />Alto contraste</label
+          >
+          <label class="row"
+            ><input type="checkbox" name="motion" />Reducir movimiento</label
+          >
+          <label class="row"
+            ><input type="checkbox" name="fps" />Mostrar FPS</label
+          >
+        </fieldset>
+
+        <fieldset>
+          <legend>Teclado</legend>
+          <label class="row"
+            ><input type="checkbox" name="shortcuts" />Atajos de una tecla
+            (G, P, R, C, H, V, M, 1, 2, 3, Espacio)</label
+          >
+          <p class="note">
+            Desactivarlos evita golpes o pausas por accidente con lectores de
+            pantalla o comandos de voz.
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Rendimiento</legend>
+          <button type="button" data-action="measure">
+            Registrar cuadros (CSV)
+          </button>
+        </fieldset>
+
+        <div class="dialog-actions">
+          <button type="button" id="settings-reset">Restablecer</button>
+          <button type="button" id="settings-close" class="primary">
+            Listo
+          </button>
+        </div>
+      </form>
+    </dialog>
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
