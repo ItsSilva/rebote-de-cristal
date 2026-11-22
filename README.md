@@ -25,6 +25,10 @@ npm run server
 
 Vite redirige `/socket` al puerto 8787. La opción `VITE_NETWORK_URL` permite seleccionar un endpoint propio; el valor `needle` selecciona la infraestructura oficial. No se requiere desplegar el coordinador Node para la publicación administrada.
 
+## Opciones y accesibilidad
+
+El botón **Opciones** (cabecera y panel) abre un diálogo con: dificultad de la CPU (fácil, normal, difícil), mano y postura, sonido y volumen, tamaño de texto, alto contraste, reducir movimiento, mostrar FPS y atajos de una tecla (se pueden desactivar, WCAG 2.1.4). Se guardan en el navegador (`localStorage`, clave `rebote-ajustes`). Los atajos no se disparan con Ctrl/Cmd/Alt, con el foco en un botón (Enter y Espacio conservan su función nativa) ni dentro del diálogo. Código en `web/src/settings.ts`; la dificultad usa `Simulation.cpuLevel` en `web/src/game/physics.ts`, donde «normal» conserva los valores de la entrega.
+
 ## RV y RM
 
 Abrir la experiencia por HTTPS en un navegador con WebXR. Las opciones RV y RM se detectan por separado. En RV: agarre cerca del mango toma o devuelve la pala; el panel permite recuperarla a distancia; gatillo acciona el panel espacial o prepara el saque; mover físicamente la pala devuelve la pelota. El panel permite pausar, recuperar, cambiar modo, iniciar revancha, desplazarse y salir de XR. Pinza con seguimiento de manos es una implementación experimental: **pendiente de probar en visor**.

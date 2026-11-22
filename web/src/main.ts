@@ -13,6 +13,15 @@ import { type Side } from "./game/rules";
 import { buildWorld, updateText, palette } from "./world";
 import { ClubConnection } from "./network";
 import { predictBall } from "./game/prediction";
+import {
+  applyVisual,
+  defaults,
+  loadSettings,
+  readForm,
+  saveSettings,
+  writeForm,
+  type Settings,
+} from "./settings";
 import "./styles/style.css";
 class Game {
   sim = new Simulation();
@@ -21,6 +30,7 @@ class Game {
   held = false;
   hand: "left" | "right" = "right";
   seated = false;
+  settings: Settings = loadSettings();
   offset = 0;
   arPlaced = true;
   pointer = { x: 0, y: 0 };
@@ -34,6 +44,7 @@ class Game {
   poseClock = 0;
   sendClock = 0;
   lastRevision = -1;
+  lastScoreText = "";
   lastEvent = 0;
   xrWas = false;
   wasTrigger = false;
@@ -104,6 +115,10 @@ class Game {
       this.message(why + " · CPU local disponible.");
       this.refresh();
     };
+    this.hand = this.settings.hand;
+    this.seated = this.settings.seated;
+    this.sim.cpuLevel = this.settings.cpuLevel;
+    applyVisual(this.settings);
     this.bind();
     this.place("entry");
     addComponent(ctx.scene, WebXR, {
@@ -133,10 +148,69 @@ class Game {
   message(text: string) {
     document.querySelector("#message")!.textContent = text;
   }
+  /** Mantiene Opciones al día cuando mano o postura cambian por tecla o botón. */
+  syncToggles() {
+    this.settings = {
+      ...this.settings,
+      hand: this.hand,
+      seated: this.seated,
+    };
+    saveSettings(this.settings);
+    const form = document.querySelector<HTMLFormElement>("#settings-form");
+    if (form) writeForm(form, this.settings);
+  }
+  bindSettings() {
+    const dialog = document.querySelector<HTMLDialogElement>("#settings")!;
+    const form = document.querySelector<HTMLFormElement>("#settings-form")!;
+    writeForm(form, this.settings);
+    document
+      .querySelectorAll<HTMLElement>("[data-open=settings]")
+      .forEach((b) => {
+        b.onclick = () => {
+          if (
+            this.sim.rules.phase === "juego" ||
+            this.sim.rules.phase === "saque"
+          )
+            this.action("pause");
+          writeForm(form, this.settings);
+          dialog.showModal();
+        };
+      });
+    document.querySelector<HTMLElement>("#settings-close")!.onclick = () =>
+      dialog.close();
+    document.querySelector<HTMLElement>("#settings-reset")!.onclick = () => {
+      const d = defaults();
+      this.applyChoices({ ...d, hand: this.hand, seated: this.seated });
+      if (d.hand !== this.hand) this.action("hand");
+      if (d.seated !== this.seated) this.action("seated");
+      this.syncToggles();
+      this.message("Opciones restablecidas.");
+    };
+    form.addEventListener("input", () => {
+      const next = readForm(form, this.settings);
+      if (next.hand !== this.hand) this.action("hand");
+      if (next.seated !== this.seated) this.action("seated");
+      this.applyChoices({ ...next, hand: this.hand, seated: this.seated });
+      writeForm(form, this.settings);
+    });
+  }
+  applyChoices(next: Settings) {
+    this.settings = next;
+    this.sim.cpuLevel = next.cpuLevel;
+    applyVisual(next);
+    saveSettings(next);
+  }
   bind() {
     document
       .querySelectorAll<HTMLButtonElement>("[data-action]")
       .forEach((b) => (b.onclick = () => this.action(b.dataset.action!)));
+    this.bindSettings();
+    document
+      .querySelector("needle-engine")
+      ?.setAttribute(
+        "aria-label",
+        "Cancha de tenis de mesa en 3D. Los controles y el marcador están en el panel de la página.",
+      );
     document.querySelector<HTMLFormElement>("#join")!.onsubmit = (e) => {
       e.preventDefault();
       this.net.join(
@@ -177,7 +251,24 @@ class Game {
       else this.startSwing(e.shiftKey);
     });
     window.addEventListener("keydown", (e) => {
-      if ((e.target as HTMLElement).tagName === "INPUT") return;
+      const target = e.target as HTMLElement;
+      // Campos de texto: nunca interceptar.
+      if (
+        target.closest?.(
+          "input, textarea, select, [contenteditable], dialog",
+        )
+      )
+        return;
+      // Combinaciones del navegador o del sistema (Ctrl+R, Cmd+1, Alt+...).
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      // Botones, resúmenes y enlaces enfocados conservan Enter, Espacio y
+      // flechas nativos: no se dispara además un golpe, un saque ni un ajuste.
+      const onControl = !!target.closest?.("button, summary, a[href]");
+      if (onControl && [" ", "Enter", "ArrowUp", "ArrowDown"].includes(e.key))
+        return;
+      // WCAG 2.1.4: los atajos de una sola tecla se pueden desactivar.
+      // Escape sigue activo porque no es una tecla de carácter.
+      if (!this.settings.shortcuts && e.key !== "Escape") return;
       const map: Record<string, string> = {
         g: "grab",
         " ": "serve",
@@ -222,7 +313,7 @@ class Game {
       if (actuator)
         void actuator.pulse(kind === "pala" ? 0.35 : 0.15, 35).catch(() => {});
     }
-    if (!this.audio) return;
+    if (!this.audio || !this.settings.sound || this.settings.volume <= 0) return;
     const a = this.audio,
       t = a.currentTime,
       o = a.createOscillator(),
@@ -237,7 +328,7 @@ class Game {
       t,
     );
     o.type = kind === "red" ? "triangle" : "sine";
-    g.gain.setValueAtTime(0.06, t);
+    g.gain.setValueAtTime(0.06 * (this.settings.volume / 70), t);
     g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
     o.connect(g);
     g.connect(a.destination);
@@ -398,11 +489,13 @@ class Game {
           " seleccionada. Recupera la pala.",
       );
       this.held = false;
+      this.syncToggles();
       return;
     }
     if (action === "seated") {
       this.pause("Postura cambiada. Continúa para sacar.");
       this.seated = !this.seated;
+      this.syncToggles();
       this.place("play");
       this.message(
         this.seated
@@ -856,6 +949,11 @@ class Game {
       server = r.server === 0 ? "A" : "B",
       score = `${r.score[0]} : ${r.score[1]}`;
     document.querySelector("#score")!.textContent = score;
+    if (score !== this.lastScoreText) {
+      this.lastScoreText = score;
+      document.querySelector("#sr-score")!.textContent =
+        `Marcador: A ${r.score[0]}, B ${r.score[1]}.`;
+    }
     document.querySelector("#turn")!.textContent =
       `Saque ${server} · ${this.sim.cpu ? "CPU" : "PvP"}`;
     document.querySelector("#phase")!.textContent =
