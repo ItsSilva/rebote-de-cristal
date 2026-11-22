@@ -1,7 +1,21 @@
 name: Publicar en Needle Cloud
-on: workflow_dispatch
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Serializa despliegues para que una versión anterior no sustituya a la nueva.
+concurrency:
+  group: needle-cloud-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     defaults:
       run:

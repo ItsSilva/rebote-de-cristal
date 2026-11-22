@@ -55,6 +55,10 @@ El menú **Rebote / 3. Exportar Needle y compilar** utiliza el exportador oficia
 
 ## Pruebas y publicación
 
+Cada push o merge a `main` ejecuta **Publicar en Needle Cloud** automáticamente: instala dependencias, revisa tipos, ejecuta las 9 pruebas, optimiza el build y publica en la [misma URL del juego](https://rebote-de-cristal-160ydy19qg7w.needle.run/). Los colaboradores solo necesitan subir sus cambios a GitHub; no necesitan una cuenta ni una sesión de Needle. Los cambios en otras ramas se publican al integrarse en `main`.
+
+El workflow usa el secreto de repositorio `NEEDLE_CLOUD_TOKEN`, emitido por **My Team** con permiso **Read & Write**. Nunca guardar el token en el código ni compartirlo por chat. Su propietario debe reemplazar el secreto si el token caduca o se revoca. Los despliegues se ejecutan de uno en uno; si se acumulan cambios, queda pendiente la versión más reciente. Un fallo en los checks o el build impide pasar a publicación y puede revisarse en **Actions**. Se conserva **Run workflow** para repetir una publicación manual desde `main`.
+
 ```powershell
 npm run typecheck
 npm test
