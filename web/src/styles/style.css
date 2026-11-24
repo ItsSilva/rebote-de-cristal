@@ -200,6 +200,12 @@ h1 {
   min-height: 42px;
   color: #f0dcc0;
 }
+.message {
+  margin: -4px 0 10px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #b4c2cf;
+}
 .primary-actions {
   display: grid;
   gap: 7px;
@@ -271,30 +277,6 @@ details p {
   font-size: 0.75rem;
   color: #bcc5cf;
 }
-#hint {
-  position: fixed;
-  bottom: 82px;
-  left: 50%;
-  transform: translateX(-30%);
-  width: min(560px, 50vw);
-  background: #172238f2;
-  border: 1px solid #ffffff24;
-  border-radius: 14px;
-  padding: 14px 20px;
-}
-#hint .eyebrow {
-  color: #f4a27f;
-  font-size: 0.75rem;
-}
-#hint p {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 5px 0;
-}
-#hint small {
-  font-size: 0.75rem;
-  color: #b4c2cf;
-}
 footer {
   position: fixed;
   bottom: 0;
@@ -344,14 +326,6 @@ footer {
   }
   .primary-actions button {
     font-size: 0.8125rem;
-  }
-  #hint {
-    left: 16px;
-    right: 16px;
-    bottom: 55px;
-    transform: none;
-    width: auto;
-    padding: 9px 12px;
   }
   footer {
     padding: 12px 16px;
@@ -521,7 +495,6 @@ html[data-contrast="high"] {
   color: #fff;
 }
 html[data-contrast="high"] aside,
-html[data-contrast="high"] #hint,
 html[data-contrast="high"] dialog {
   background: #000;
   border: 2px solid #fff;
@@ -548,6 +521,7 @@ html[data-contrast="high"] button[aria-pressed="true"] {
 }
 html[data-contrast="high"] .intro,
 html[data-contrast="high"] #phase,
+html[data-contrast="high"] .message,
 html[data-contrast="high"] summary span,
 html[data-contrast="high"] details p,
 html[data-contrast="high"] .note,
@@ -555,8 +529,6 @@ html[data-contrast="high"] .scorecard > span,
 html[data-contrast="high"] .scorecard small,
 html[data-contrast="high"] .edition,
 html[data-contrast="high"] .edition span,
-html[data-contrast="high"] #hint small,
-html[data-contrast="high"] #hint .eyebrow,
 html[data-contrast="high"] .eyebrow,
 html[data-contrast="high"] legend,
 html[data-contrast="high"] footer {
@@ -564,4 +536,47 @@ html[data-contrast="high"] footer {
 }
 html[data-contrast="high"] footer {
   background: #000;
+}
+
+/* Peloteo: aparece desde el tercer golpe seguido */
+.rally {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  margin: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: #68cdb5;
+  color: #172238;
+  font: 700 1.125rem/1.2 "Space Grotesk", sans-serif;
+  transform: translate(-50%, -6px) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.rally.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  animation: rally-pop 0.32s ease-out;
+}
+@keyframes rally-pop {
+  0% {
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  60% {
+    transform: translate(-50%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+html[data-motion="reduce"] .rally.is-on {
+  animation: none;
+}
+html[data-contrast="high"] .rally {
+  background: #ffe14d;
+  color: #000;
+  border: 2px solid #fff;
 }
