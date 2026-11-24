@@ -46,6 +46,17 @@ class Game {
   lastRevision = -1;
   lastScoreText = "";
   lastEvent = 0;
+  /** Hasta cuándo se muestra la ayuda aunque haya un punto en juego. */
+  hintUntil = 0;
+  hintShown = true;
+  /** Micro interacción de golpe: anillos, rebote de la pala y peloteo. */
+  hitFx: { mesh: T.Mesh; t: number }[] = [];
+  ringGeo?: T.RingGeometry;
+  padPop = [0, 0];
+  padBase: T.Vector3[] = [];
+  ballPop = 0;
+  rally = 0;
+  rallyTimer = 0;
   xrWas = false;
   wasTrigger = false;
   wasSqueeze = false;
@@ -147,6 +158,79 @@ class Game {
   }
   message(text: string) {
     document.querySelector("#message")!.textContent = text;
+    // Un mensaje nuevo se deja ver un momento aunque el punto siga en juego.
+    this.hintUntil = performance.now() + 2600;
+  }
+  /** La ayuda estorba con la bola en el aire: se oculta y vuelve entre puntos. */
+  updateHint(now: number) {
+    const r = this.sim.rules;
+    const inPlay =
+      this.sim.active && (r.phase === "juego" || r.phase === "saque");
+    const show = this.settings.hints && (!inPlay || now < this.hintUntil);
+    if (show === this.hintShown) return;
+    this.hintShown = show;
+    document.querySelector("#hint")!.classList.toggle("is-hidden", !show);
+  }
+  onHit(side: Side) {
+    this.rally++;
+    if (!this.settings.motion) {
+      this.ringGeo ??= new T.RingGeometry(0.03, 0.046, 48);
+      const ring = new T.Mesh(
+        this.ringGeo,
+        new T.MeshBasicMaterial({
+          color: side === 0 ? palette.amber : palette.coral,
+          transparent: true,
+          opacity: 0.9,
+          side: T.DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      ring.position.copy(this.visualBall);
+      ring.quaternion.copy(this.world.paddles[side].quaternion);
+      this.world.root.add(ring);
+      this.hitFx.push({ mesh: ring, t: 0 });
+      this.padPop[side] = 1;
+      this.ballPop = 1;
+    }
+    if (this.rally >= 3) {
+      const el = document.querySelector<HTMLElement>("#rally")!;
+      el.textContent = `Peloteo ×${this.rally}`;
+      el.classList.remove("is-on");
+      void el.offsetWidth; // reinicia la animación
+      el.classList.add("is-on");
+      clearTimeout(this.rallyTimer);
+      this.rallyTimer = window.setTimeout(
+        () => el.classList.remove("is-on"),
+        1100,
+      );
+    }
+  }
+  updateHitFx(dt: number) {
+    for (let i = this.hitFx.length - 1; i >= 0; i--) {
+      const f = this.hitFx[i];
+      f.t += dt / 0.28;
+      const k = Math.min(1, f.t),
+        ease = 1 - (1 - k) * (1 - k);
+      f.mesh.scale.setScalar(1 + ease * 3.2);
+      (f.mesh.material as T.MeshBasicMaterial).opacity = 0.9 * (1 - k);
+      if (k >= 1) {
+        this.world.root.remove(f.mesh);
+        (f.mesh.material as T.Material).dispose();
+        this.hitFx.splice(i, 1);
+      }
+    }
+    if (!this.padBase.length)
+      this.padBase = this.world.paddles.map((p) => p.scale.clone());
+    if (this.ballPop > 0) {
+      this.ballPop = Math.max(0, this.ballPop - dt / 0.14);
+      this.world.ball.scale.setScalar(1 + 0.6 * this.ballPop);
+    }
+    for (const s of [0, 1] as const) {
+      if (this.padPop[s] <= 0) continue;
+      this.padPop[s] = Math.max(0, this.padPop[s] - dt / 0.16);
+      const bump = 1 + 0.12 * Math.sin(this.padPop[s] * Math.PI);
+      this.world.paddles[s].scale.copy(this.padBase[s]).multiplyScalar(bump);
+    }
   }
   /** Mantiene Opciones al día cuando mano o postura cambian por tecla o botón. */
   syncToggles() {
@@ -320,10 +404,14 @@ class Game {
       g = a.createGain();
     o.frequency.setValueAtTime(
       (
-        { pala: 620, mesa: 260, red: 110, punto: 880, agarre: 430 } as Record<
-          string,
-          number
-        >
+        {
+          // El golpe sube de tono mientras dura el peloteo.
+          pala: 620 + Math.min(this.rally, 10) * 28,
+          mesa: 260,
+          red: 110,
+          punto: 880,
+          agarre: 430,
+        } as Record<string, number>
       )[kind] || 440,
       t,
     );
@@ -934,8 +1022,12 @@ class Game {
     for (const e of this.sim.events)
       if (e.id > this.lastEvent) {
         this.sound(e.kind);
+        if (e.kind === "pala") this.onHit(e.side ?? 0);
+        if (e.kind === "punto") this.rally = 0;
         this.lastEvent = e.id;
       }
+    this.updateHint(now);
+    this.updateHitFx(dt);
     if (this.sim.rules.revision !== this.lastRevision) {
       this.refresh();
       this.lastRevision = this.sim.rules.revision;

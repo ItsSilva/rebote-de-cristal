@@ -281,6 +281,14 @@ details p {
   border: 1px solid #ffffff24;
   border-radius: 14px;
   padding: 14px 20px;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+#hint.is-hidden {
+  opacity: 0;
+  transform: translate(-30%, 14px);
+  pointer-events: none;
 }
 #hint .eyebrow {
   color: #f4a27f;
@@ -564,4 +572,47 @@ html[data-contrast="high"] footer {
 }
 html[data-contrast="high"] footer {
   background: #000;
+}
+
+/* Peloteo: aparece desde el tercer golpe seguido, donde estaba la ayuda */
+.rally {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  margin: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: #68cdb5;
+  color: #172238;
+  font: 700 1.125rem/1.2 "Space Grotesk", sans-serif;
+  transform: translate(-50%, -6px) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.rally.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  animation: rally-pop 0.32s ease-out;
+}
+@keyframes rally-pop {
+  0% {
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  60% {
+    transform: translate(-50%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+html[data-motion="reduce"] .rally.is-on {
+  animation: none;
+}
+html[data-contrast="high"] .rally {
+  background: #ffe14d;
+  color: #000;
+  border: 2px solid #fff;
 }
