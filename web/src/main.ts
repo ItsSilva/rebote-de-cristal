@@ -58,6 +58,11 @@ class Game {
   resultShown = false;
   pointTimer = 0;
   netFlash?: T.Mesh;
+  /** Red dinámica que se abomba al chocar (la red horneada está fusionada con las líneas). */
+  netWeb?: T.LineSegments;
+  netBase?: Float32Array;
+  netHit?: { t: number; x: number; y: number; sign: number };
+  sparks: { mesh: T.Mesh; v: T.Vector3; t: number }[] = [];
   xrWas = false;
   wasTrigger = false;
   wasSqueeze = false;
@@ -239,9 +244,104 @@ class Game {
       2200,
     );
   }
-  /** La red se ilumina un instante cuando la bola la toca. */
+  /** Construye una red de hilos subdivididos encima de la red real. */
+  buildNetWeb() {
+    const pts: number[] = [],
+      half = 0.7625,
+      y0 = 0.762,
+      y1 = 0.905,
+      seg = 12;
+    for (let i = 0; i <= 40; i++) {
+      const x = -half + (i * (2 * half)) / 40;
+      for (let k = 0; k < seg; k++)
+        pts.push(
+          x,
+          y0 + ((y1 - y0) * k) / seg,
+          0,
+          x,
+          y0 + ((y1 - y0) * (k + 1)) / seg,
+          0,
+        );
+    }
+    for (let j = 0; j <= 5; j++) {
+      const y = y0 + ((y1 - y0) * j) / 5;
+      for (let k = 0; k < 80; k++)
+        pts.push(
+          -half + (2 * half * k) / 80,
+          y,
+          0,
+          -half + (2 * half * (k + 1)) / 80,
+          y,
+          0,
+        );
+    }
+    const g = new T.BufferGeometry();
+    this.netBase = new Float32Array(pts);
+    g.setAttribute("position", new T.BufferAttribute(new Float32Array(pts), 3));
+    this.netWeb = new T.LineSegments(
+      g,
+      new T.LineBasicMaterial({
+        color: palette.ivory,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      }),
+    );
+    this.netWeb.visible = false;
+    this.world.root.add(this.netWeb);
+  }
+  /** La bola choca con la red: se ilumina, se abomba y suelta chispas. */
   onNet() {
-    if (this.settings.motion) return;
+    const ball = this.visualBall.clone();
+    if (!this.settings.motion) {
+      // Empuja la red hacia el lado al que iba la bola.
+      this.netHit = {
+        t: 0,
+        x: ball.x,
+        y: Math.min(0.89, Math.max(0.78, ball.y)),
+        sign: ball.z >= 0 ? -1 : 1,
+      };
+      if (!this.netWeb) this.buildNetWeb();
+      this.ringGeo ??= new T.RingGeometry(0.03, 0.046, 48);
+      const ring = new T.Mesh(
+        this.ringGeo,
+        new T.MeshBasicMaterial({
+          color: palette.coral,
+          transparent: true,
+          opacity: 0.95,
+          side: T.DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      ring.position.set(ball.x, ball.y, 0);
+      this.world.root.add(ring);
+      this.hitFx.push({ mesh: ring, t: 0 });
+      const sparkGeo = new T.PlaneGeometry(0.018, 0.018);
+      for (let i = 0; i < 9; i++) {
+        const a = (i / 9) * Math.PI * 2,
+          m = new T.Mesh(
+            sparkGeo,
+            new T.MeshBasicMaterial({
+              color: i % 2 ? palette.coral : palette.ivory,
+              transparent: true,
+              side: T.DoubleSide,
+              depthWrite: false,
+            }),
+          );
+        m.position.set(ball.x, ball.y, 0);
+        m.rotation.z = a;
+        this.world.root.add(m);
+        this.sparks.push({
+          mesh: m,
+          v: new T.Vector3(
+            Math.cos(a) * 0.9,
+            Math.sin(a) * 0.9 + 0.6,
+            (ball.z >= 0 ? 1 : -1) * 0.35,
+          ),
+          t: 0,
+        });
+      }
+    }
     if (!this.netFlash) {
       this.netFlash = new T.Mesh(
         new T.PlaneGeometry(1.56, 0.15),
@@ -256,9 +356,65 @@ class Game {
       this.netFlash.position.set(0, 0.83, 0);
       this.world.root.add(this.netFlash);
     }
-    (this.netFlash.material as T.MeshBasicMaterial).opacity = 0.7;
+    (this.netFlash.material as T.MeshBasicMaterial).opacity = 0.45;
   }
   updateHitFx(dt: number) {
+    if (this.netHit) {
+      const h = this.netHit;
+      h.t += dt;
+      const done = h.t > 1.1,
+        // Se estira hacia donde iba la bola y vuelve con un rebote amortiguado.
+        wave = done
+          ? 0
+          : 0.12 * Math.exp(-3.6 * h.t) * Math.abs(Math.cos(8 * h.t));
+      if (this.netWeb && this.netBase) {
+        const pos = this.netWeb.geometry.getAttribute(
+            "position",
+          ) as T.BufferAttribute,
+          arr = pos.array as Float32Array,
+          base = this.netBase;
+        for (let i = 0; i < arr.length; i += 3) {
+          const x = base[i],
+            y = base[i + 1],
+            dx = x - h.x,
+            dy = y - h.y,
+            r = Math.hypot(dx * 0.55, dy),
+            // Bolsa alrededor del impacto: los hilos se abren y la red cede.
+            pocket = Math.exp(-(r * r) / (2 * 0.1 * 0.1)),
+            edge = Math.max(0, Math.sin((Math.PI * (y - 0.762)) / 0.143)),
+            push = wave * pocket * edge,
+            k = r > 1e-4 ? push / r : 0;
+          arr[i] = x + dx * 0.55 * k;
+          arr[i + 1] = Math.min(
+            0.905,
+            Math.max(0.762, y + dy * k - push * 0.35),
+          );
+          arr[i + 2] = h.sign * push * 1.4;
+        }
+        pos.needsUpdate = true;
+        const m = this.netWeb.material as T.LineBasicMaterial;
+        m.opacity = done ? 0 : Math.min(1, 25 * h.t) * Math.exp(-1.6 * h.t);
+        m.color.set(palette.ivory);
+        this.netWeb.visible = !done;
+      }
+      if (done) this.netHit = undefined;
+    }
+    for (let i = this.sparks.length - 1; i >= 0; i--) {
+      const s = this.sparks[i];
+      s.t += dt;
+      s.v.y -= 3.5 * dt;
+      s.mesh.position.addScaledVector(s.v, dt);
+      s.mesh.rotation.z += dt * 8;
+      (s.mesh.material as T.MeshBasicMaterial).opacity = Math.max(
+        0,
+        1 - s.t / 0.55,
+      );
+      if (s.t >= 0.55) {
+        this.world.root.remove(s.mesh);
+        (s.mesh.material as T.Material).dispose();
+        this.sparks.splice(i, 1);
+      }
+    }
     if (this.netFlash) {
       const m = this.netFlash.material as T.MeshBasicMaterial;
       m.opacity = Math.max(0, m.opacity - dt * 1.1);
@@ -349,12 +505,11 @@ class Game {
     this.bindSettings();
     document.querySelector<HTMLElement>("#result-close")!.onclick = () =>
       this.hideResult();
-    document.querySelector<HTMLElement>("#result")!.addEventListener(
-      "keydown",
-      (e) => {
+    document
+      .querySelector<HTMLElement>("#result")!
+      .addEventListener("keydown", (e) => {
         if (e.key === "Escape") this.hideResult();
-      },
-    );
+      });
     document
       .querySelector("needle-engine")
       ?.setAttribute(
@@ -404,9 +559,7 @@ class Game {
       const target = e.target as HTMLElement;
       // Campos de texto: nunca interceptar.
       if (
-        target.closest?.(
-          "input, textarea, select, [contenteditable], dialog",
-        )
+        target.closest?.("input, textarea, select, [contenteditable], dialog")
       )
         return;
       // Combinaciones del navegador o del sistema (Ctrl+R, Cmd+1, Alt+...).
@@ -463,7 +616,8 @@ class Game {
       if (actuator)
         void actuator.pulse(kind === "pala" ? 0.35 : 0.15, 35).catch(() => {});
     }
-    if (!this.audio || !this.settings.sound || this.settings.volume <= 0) return;
+    if (!this.audio || !this.settings.sound || this.settings.volume <= 0)
+      return;
     if (kind === "victoria" || kind === "derrota") {
       const notes =
         kind === "victoria" ? [523, 659, 784, 1047] : [440, 370, 311];
@@ -1144,7 +1298,8 @@ class Game {
     document.querySelector("#result-title")!.textContent = won
       ? "¡Ganaste!"
       : "Perdiste";
-    document.querySelector("#result-score")!.textContent = `${mine} : ${theirs}`;
+    document.querySelector("#result-score")!.textContent =
+      `${mine} : ${theirs}`;
     document.querySelector("#result-detail")!.textContent = won
       ? `Le ganaste ${cpu ? "al autómata" : "a tu rival"}. ¿Otra para confirmarlo?`
       : `Esta vez ganó ${cpu ? "el autómata" : "tu rival"}. La revancha está a un clic.`;
