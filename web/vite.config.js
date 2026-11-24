@@ -23,6 +23,15 @@ export default defineConfig(async ({ command }) => {
     build: {
       outDir: "./dist",
       emptyOutDir: true,
+      rollupOptions: {
+        output: {
+          // Needle nombra el motor "needle-engine@<versión>.js" sin hash, pero su
+          // contenido cambia en cada build (importa piezas con hash). El CDN o el
+          // navegador servían la copia vieja y cargaban dos motores: el juego nunca
+          // arrancaba. Con hash en todos los fragmentos cada publicación es coherente.
+          chunkFileNames: "assets/[name].[hash].js",
+        },
+      },
     },
   };
 });
