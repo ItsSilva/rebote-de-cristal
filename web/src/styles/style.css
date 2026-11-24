@@ -200,6 +200,9 @@ h1 {
   min-height: 42px;
   color: #f0dcc0;
 }
+.message:empty {
+  display: none;
+}
 .message {
   margin: -4px 0 10px;
   font-size: 0.8125rem;

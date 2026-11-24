@@ -143,9 +143,6 @@ class Game {
     this.refresh();
     const room = new URL(location.href).searchParams.get("room");
     if (room) this.net.join(room);
-    this.message(
-      "Toma la pala. Activa el saque. Devuelve la pelota tras el primer bote.",
-    );
   }
   get side(): Side {
     return this.net.side;
