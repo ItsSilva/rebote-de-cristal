@@ -46,9 +46,6 @@ class Game {
   lastRevision = -1;
   lastScoreText = "";
   lastEvent = 0;
-  /** Hasta cuándo se muestra la ayuda aunque haya un punto en juego. */
-  hintUntil = 0;
-  hintShown = true;
   /** Micro interacción de golpe: anillos, rebote de la pala y peloteo. */
   hitFx: { mesh: T.Mesh; t: number }[] = [];
   ringGeo?: T.RingGeometry;
@@ -158,18 +155,6 @@ class Game {
   }
   message(text: string) {
     document.querySelector("#message")!.textContent = text;
-    // Un mensaje nuevo se deja ver un momento aunque el punto siga en juego.
-    this.hintUntil = performance.now() + 2600;
-  }
-  /** La ayuda estorba con la bola en el aire: se oculta y vuelve entre puntos. */
-  updateHint(now: number) {
-    const r = this.sim.rules;
-    const inPlay =
-      this.sim.active && (r.phase === "juego" || r.phase === "saque");
-    const show = this.settings.hints && (!inPlay || now < this.hintUntil);
-    if (show === this.hintShown) return;
-    this.hintShown = show;
-    document.querySelector("#hint")!.classList.toggle("is-hidden", !show);
   }
   onHit(side: Side) {
     this.rally++;
@@ -1026,7 +1011,6 @@ class Game {
         if (e.kind === "punto") this.rally = 0;
         this.lastEvent = e.id;
       }
-    this.updateHint(now);
     this.updateHitFx(dt);
     if (this.sim.rules.revision !== this.lastRevision) {
       this.refresh();
