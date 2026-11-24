@@ -56,7 +56,7 @@ while (Date.now() < end) {
     served++;
   }
   if (s.phase === "juego" && s.last === 1 && s.bounces === 1 && s.stage === 0) {
-    const t = Math.max(0, (1.24 - s.p.z) / (s.velocity.z + 1.59));
+    const t = Math.max(0, (1.5 - s.p.z) / (s.velocity.z + 1.59));
     const x = 720 + ((s.p.x + s.velocity.x * t) / 0.9) * 720,
       y = 450 - (s.p.y + s.velocity.y * t - 4.905 * t * t - 1.02) * 900;
     await page.mouse.move(

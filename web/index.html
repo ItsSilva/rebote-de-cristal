@@ -85,6 +85,24 @@
     </aside>
     <p id="sr-score" class="sr-only" role="status"></p>
     <p id="rally" class="rally" aria-hidden="true"></p>
+    <section
+      id="result"
+      class="result"
+      role="alertdialog"
+      aria-labelledby="result-title"
+      aria-describedby="result-detail"
+      hidden
+    >
+      <p class="result-kicker">Fin del partido</p>
+      <h2 id="result-title">¡Ganaste!</h2>
+      <p id="result-score" class="result-score">7 : 5</p>
+      <p id="result-detail" class="result-detail"></p>
+      <div class="result-actions">
+        <button data-action="rematch" class="primary">Revancha</button
+        ><button type="button" data-open="settings">Opciones</button
+        ><button type="button" id="result-close">Ver la cancha</button>
+      </div>
+    </section>
     <footer>
       <span>Partido a 7 puntos, con diferencia de 2</span
       ><span id="performance">Midiendo cuadros…</span

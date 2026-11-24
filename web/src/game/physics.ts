@@ -262,33 +262,142 @@ export class Simulation {
       this.moveBot(target, norm(v(0, -0.55, 1)), dt, 1.7);
       return;
     }
-    if (this.rules.phase !== "juego" || this.rules.last === 1) return;
-    const time = (-1.12 - this.p.z) / (this.velocity.z || -1),
-      t = clamp(time, 0, 0.65);
-    // Reach and reaction are deliberately bounded. Error varies by rally; no teleport.
-    this.cpuClock += dt;
     const level = this.cpuLevel,
-      reaction = [0.26, 0.14, 0.09][level],
-      botSpeed = [1.3, 1.8, 2.3][level],
-      slip = [0.32, 0.18, 0.07][level],
-      wobble = [0.05, 0.025, 0.012][level];
+      reaction = [0.24, 0.12, 0.07][level],
+      botSpeed = [1.6, 2.3, 2.9][level],
+      wobble = [0.09, 0.04, 0.015][level],
+      // Probabilidad de fallar a propósito: la CPU se puede vencer.
+      blunder = [0.28, 0.1, 0.03][level];
+    const ready = v(clamp(this.p.x * 0.35, -0.3, 0.3), 1.0, -1.5);
+    if (this.rules.phase !== "juego" || this.rules.last === 1) {
+      this.cpuClock = 0;
+      this.moveBot(ready, norm(v(0, 0.35, 1)), dt, botSpeed * 0.6);
+      return;
+    }
+    // Tiempo de reacción desde que el jugador golpea.
+    this.cpuClock += dt;
     if (this.cpuClock < reaction) return;
-    const miss =
-      this.rules.rally % 5 === 0
-        ? slip
-        : wobble * Math.sin(this.rules.rally * 2.1);
-    let y = this.p.y + this.velocity.y * t - 4.905 * t * t;
-    if (y < 0.8) y = 0.8 + (0.8 - y) * 0.75;
-    const stroke =
-      this.rules.serveStage === 0 &&
-      this.rules.bounces === 1 &&
-      this.p.z < -0.58;
-    const target = v(
-      clamp(this.p.x + this.velocity.x * t + miss, -0.66, 0.66),
-      clamp(y, 0.85, 1.35),
-      stroke ? -0.9 : -1.24,
+    const plan = this.intercept();
+    if (!plan) {
+      // La bola no va a botar en su campo: se aparta para no tocarla (sería volea).
+      const side = this.p.x > 0 ? -1 : 1;
+      this.moveBot(
+        v(clamp(this.p.x + side * 0.45, -0.9, 0.9), 0.72, -1.65),
+        norm(v(0, 0.35, 1)),
+        dt,
+        botSpeed * 1.4,
+      );
+      return;
+    }
+    // Error determinista por golpe (las pruebas siguen siendo reproducibles).
+    const seed =
+        Math.sin(
+          (this.rules.hits + 1) * 12.9898 +
+            this.rules.rally * 78.233 +
+            Math.round(plan.p.x * 997) * 0.37,
+        ) * 43758.5453,
+      noise = seed - Math.floor(seed),
+      whiff = noise < blunder ? (noise < blunder / 2 ? -1 : 1) * 0.17 : 0;
+    const swing = 0.12,
+      strikeSpeed = 1.2,
+      key = this.rules.hits * 100 + this.rules.rally;
+    if (this.aimKey !== key) {
+      this.aimKey = key;
+      const aimX = (noise - 0.5) * 2 * (0.25 + wobble * 4);
+      this.aimNormal = this.aim(plan.p, plan.v, aimX, v(0, 0, strikeSpeed));
+    }
+    // Se coloca detrás del punto de impacto y, al final, golpea hacia delante.
+    const striking = plan.t <= swing,
+      target = v(
+        clamp(plan.p.x + whiff, -0.85, 0.85),
+        clamp(plan.p.y, 0.78, 1.6),
+        striking ? plan.p.z + 0.04 : plan.p.z - 0.1,
+      );
+    this.moveBot(
+      target,
+      this.aimNormal,
+      dt,
+      striking ? Math.max(strikeSpeed, botSpeed * 0.5) : botSpeed,
     );
-    this.moveBot(target, norm(v(0, 0.6, 1)), dt, botSpeed);
+  }
+  aimKey = -1;
+  aimNormal: V = norm(v(0, 0.35, 1));
+  /** Busca la inclinación de la pala que deja la bola dentro del campo rival. */
+  aim(p0: V, vin: V, aimX: number, padV: V): V {
+    let best = { n: norm(v(0, 0.35, 1)), score: Infinity };
+    const h = SIZE.step,
+      netY = SIZE.top + SIZE.net + 0.03,
+      tableY = SIZE.top + SIZE.radius;
+    for (let tilt = -0.3; tilt <= 0.95; tilt += 0.05)
+      for (const yaw of [-0.3, -0.18, -0.08, 0, 0.08, 0.18, 0.3]) {
+        const n = norm(v(yaw, tilt, 1)),
+          rel = sub(vin, padV);
+        let out = add(sub(rel, mul(n, 1.72 * dot(rel, n))), padV);
+        if (len(out) > 8) out = mul(norm(out), 8);
+        if (out.z <= 0) continue;
+        out = { ...out, z: clamp(out.z, 2.6, 5.5) };
+        let p = { ...p0 },
+          vel = { ...out },
+          crossed = false,
+          land: V | null = null;
+        for (let t = 0; t < 1.6; t += h) {
+          vel = { ...vel, y: vel.y - 9.81 * h };
+          const next = add(p, mul(vel, h));
+          if (!crossed && p.z < 0 && next.z >= 0) {
+            if (next.y < netY) break;
+            crossed = true;
+          }
+          if (next.y < tableY) {
+            land = next;
+            break;
+          }
+          p = next;
+        }
+        if (!land || !crossed) continue;
+        const outside =
+          Math.max(0, Math.abs(land.x) - 0.66) +
+          Math.max(0, 0.2 - land.z) +
+          Math.max(0, land.z - 1.25);
+        const score =
+          outside * 20 + Math.abs(land.z - 0.85) + Math.abs(land.x - aimX) * 0.8;
+        if (score < best.score) best = { n, score };
+      }
+    return best.n;
+  }
+  /** Predice dónde conviene golpear: después del bote en el lado de la CPU. */
+  intercept(): { p: V; v: V; t: number } | null {
+    const tableY = SIZE.top + SIZE.radius,
+      h = SIZE.step;
+    let p = { ...this.p },
+      vel = { ...this.velocity },
+      bounced = this.rules.serveStage === 0 && this.rules.bounces === 1,
+      ownBounce = this.rules.serveStage === 2 || this.rules.serveStage === 0;
+    let best: { p: V; v: V; t: number; score: number } | null = null;
+    for (let t = 0; t < 1.6; t += h) {
+      vel = { ...vel, y: vel.y - 9.81 * h };
+      const next = add(p, mul(vel, h));
+      if (
+        p.y >= tableY &&
+        next.y < tableY &&
+        Math.abs(next.x) <= SIZE.width / 2 &&
+        Math.abs(next.z) <= SIZE.length / 2
+      ) {
+        vel = { x: vel.x * 0.98, y: Math.abs(vel.y) * 0.89, z: vel.z * 0.98 };
+        if (next.z < 0 && ownBounce) bounced = true;
+        if (next.z > 0) ownBounce = true;
+        p = { ...next, y: tableY };
+        continue;
+      }
+      p = next;
+      if (p.y < 0.3 || p.z < -3) break;
+      if (!bounced || p.z > -0.95 || vel.z > 0) continue;
+      // Preferir una altura cómoda (≈1,05 m) y no ir demasiado lejos de la mesa.
+      const score =
+        Math.abs(p.y - 1.05) * 2 + Math.max(0, -1.75 - p.z) * 3 + (p.y > 1.55 ? 5 : 0);
+      if (!best || score < best.score) best = { p: { ...p }, v: { ...vel }, t, score };
+      if (p.y < 0.85) break;
+    }
+    return best ? { p: best.p, v: best.v, t: best.t } : null;
   }
   moveBot(target: V, n: V, dt: number, speed: number) {
     const p = this.paddles[1],

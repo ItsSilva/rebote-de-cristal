@@ -583,3 +583,122 @@ html[data-contrast="high"] .rally {
   color: #000;
   border: 2px solid #fff;
 }
+
+/* Fin del partido */
+.result {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 8;
+  width: min(30rem, calc(100vw - 32px));
+  padding: 28px 30px 24px;
+  border-radius: 20px;
+  background: #172238f7;
+  border: 2px solid #68cdb5;
+  box-shadow: 0 6px 0 #0a1020;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  animation: result-in 0.38s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.result[hidden] {
+  display: none;
+}
+.result.is-loss {
+  border-color: #e68772;
+}
+.result-kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a9b8c6;
+}
+.result h2 {
+  margin: 6px 0 2px;
+  font: 700 3rem/1.05 "Space Grotesk", sans-serif;
+  letter-spacing: -0.03em;
+  color: #68cdb5;
+}
+.result.is-loss h2 {
+  color: #e68772;
+}
+.result-score {
+  margin: 0;
+  font: 500 2rem/1.2 "Space Grotesk", sans-serif;
+  color: #fff1cb;
+}
+.result-detail {
+  margin: 8px 0 18px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #c0cad4;
+}
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.result-actions button {
+  flex: 1 1 8rem;
+}
+/* cristales que saltan al ganar */
+.result.is-win::before,
+.result.is-win::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  width: 18px;
+  height: 18px;
+  background: #68cdb5;
+  transform: rotate(45deg);
+  animation: shard 0.9s ease-out both;
+}
+.result.is-win::before {
+  left: 22%;
+}
+.result.is-win::after {
+  right: 22%;
+  background: #f2b65e;
+  animation-delay: 0.08s;
+}
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes shard {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) rotate(45deg) scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-16px) rotate(135deg) scale(1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateY(0) rotate(225deg) scale(0.9);
+  }
+}
+html[data-motion="reduce"] .result,
+html[data-motion="reduce"] .result::before,
+html[data-motion="reduce"] .result::after {
+  animation: none;
+}
+html[data-contrast="high"] .result {
+  background: #000;
+  border-color: #fff;
+}
+html[data-contrast="high"] .result h2,
+html[data-contrast="high"] .result-score,
+html[data-contrast="high"] .result-detail,
+html[data-contrast="high"] .result-kicker {
+  color: #fff;
+}
