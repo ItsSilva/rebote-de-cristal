@@ -41,6 +41,9 @@
         ><span>B · rival</span><small id="turn">Saque A · CPU</small>
       </div>
       <p id="phase" role="status">Toma la pala y prepara el saque.</p>
+      <p id="message" class="message" aria-live="polite">
+        Toma la pala. Activa el saque. Devuelve tras el primer bote.
+      </p>
       <div class="primary-actions">
         <button data-action="grab" class="primary">
           Tomar / recuperar pala <kbd>G</kbd></button
@@ -84,15 +87,6 @@
     </aside>
     <p id="sr-score" class="sr-only" role="status"></p>
     <p id="rally" class="rally" aria-hidden="true"></p>
-    <section id="hint" aria-label="Siguiente paso">
-      <span class="eyebrow">Siguiente paso</span>
-      <p id="message" aria-live="polite">
-        Toma la pala. Activa el saque. Devuelve tras el primer bote.
-      </p>
-      <small
-        >Ratón: mover · Clic / Enter: golpe · Rueda: ángulo · Shift: fuerza · RV: agarre y gatillo</small
-      >
-    </section>
     <footer>
       <span>Partido a 7 puntos, con diferencia de 2</span
       ><span id="performance">Midiendo cuadros…</span
@@ -154,10 +148,6 @@
           <label class="row"
             ><input type="checkbox" name="fps" />Mostrar FPS</label
           >
-          <label class="row"
-            ><input type="checkbox" name="hints" />Ayuda de controles (se
-            oculta sola durante el punto)</label
-          >
         </fieldset>
 
         <fieldset>
@@ -166,6 +156,10 @@
             ><input type="checkbox" name="shortcuts" />Atajos de una tecla
             (G, P, R, C, H, V, M, 1, 2, 3, Espacio)</label
           >
+          <p class="note">
+            Ratón: mover · Clic / Enter: golpe · Rueda: ángulo · Shift:
+            fuerza · RV: agarre y gatillo.
+          </p>
           <p class="note">
             Desactivarlos evita golpes o pausas por accidente con lectores de
             pantalla o comandos de voz.
