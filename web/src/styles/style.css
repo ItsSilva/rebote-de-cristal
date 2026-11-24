@@ -702,3 +702,52 @@ html[data-contrast="high"] .result-detail,
 html[data-contrast="high"] .result-kicker {
   color: #fff;
 }
+
+/* Explicación de cada punto */
+.point-toast {
+  position: fixed;
+  bottom: 104px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 16rem;
+  max-width: min(30rem, calc(100vw - 32px));
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: #172238f2;
+  border: 2px solid #68cdb5;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.point-toast.is-loss {
+  border-color: #e68772;
+}
+.point-toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.point-toast strong {
+  font: 700 1.25rem/1.2 "Space Grotesk", sans-serif;
+  color: #68cdb5;
+}
+.point-toast.is-loss strong {
+  color: #e68772;
+}
+.point-toast span {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: #fff1cb;
+}
+html[data-contrast="high"] .point-toast {
+  background: #000;
+  border-color: #fff;
+}
+html[data-contrast="high"] .point-toast strong {
+  color: #fff;
+}

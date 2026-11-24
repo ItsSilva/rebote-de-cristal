@@ -56,6 +56,8 @@ class Game {
   rallyTimer = 0;
   /** Último estado mostrado del aviso de fin de partido. */
   resultShown = false;
+  pointTimer = 0;
+  netFlash?: T.Mesh;
   xrWas = false;
   wasTrigger = false;
   wasSqueeze = false;
@@ -189,7 +191,79 @@ class Game {
       );
     }
   }
+  /** Explica cada punto desde el punto de vista de quien juega. */
+  pointToast(winner: Side) {
+    const r = this.sim.rules;
+    if (r.phase === "fin") return; // el aviso de fin de partido ya lo cuenta
+    const won = winner === this.side,
+      rival = this.sim.cpu ? "el autómata" : "tu rival";
+    const why: Record<string, [string, string]> = {
+      "Tocó la red y no pasó": [
+        "Su bola tocó la red y no pasó.",
+        "Tu bola tocó la red y no pasó.",
+      ],
+      "Tocó la red y salió": [
+        "Su bola tocó la red y salió.",
+        "Tu bola tocó la red y salió.",
+      ],
+      "Botó en su propio lado": [
+        "Su golpe botó en su propio lado.",
+        "Tu golpe botó en tu lado de la mesa, no pasó la red.",
+      ],
+      Volea: [
+        "Golpeó antes de que la bola botara.",
+        "Golpeaste antes de que la bola botara.",
+      ],
+      "Segundo bote": [
+        "La bola botó dos veces en su lado.",
+        "La bola botó dos veces en tu lado.",
+      ],
+      "Doble golpe": ["Tocó la bola dos veces.", "Tocaste la bola dos veces."],
+      Fuera: ["La bola salió de la mesa.", "La bola salió de la mesa."],
+    };
+    const text = why[r.reason]?.[won ? 0 : 1] ?? r.reason;
+    const box = document.querySelector<HTMLElement>("#point-toast")!;
+    box.classList.toggle("is-win", won);
+    box.classList.toggle("is-loss", !won);
+    document.querySelector("#point-title")!.textContent = won
+      ? "Punto para ti"
+      : `Punto para ${rival}`;
+    document.querySelector("#point-why")!.textContent = text;
+    document.querySelector("#rally")!.classList.remove("is-on");
+    box.classList.remove("is-on");
+    void box.offsetWidth;
+    box.classList.add("is-on");
+    clearTimeout(this.pointTimer);
+    this.pointTimer = window.setTimeout(
+      () => box.classList.remove("is-on"),
+      2200,
+    );
+  }
+  /** La red se ilumina un instante cuando la bola la toca. */
+  onNet() {
+    if (this.settings.motion) return;
+    if (!this.netFlash) {
+      this.netFlash = new T.Mesh(
+        new T.PlaneGeometry(1.56, 0.15),
+        new T.MeshBasicMaterial({
+          color: palette.coral,
+          transparent: true,
+          opacity: 0,
+          side: T.DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      this.netFlash.position.set(0, 0.83, 0);
+      this.world.root.add(this.netFlash);
+    }
+    (this.netFlash.material as T.MeshBasicMaterial).opacity = 0.7;
+  }
   updateHitFx(dt: number) {
+    if (this.netFlash) {
+      const m = this.netFlash.material as T.MeshBasicMaterial;
+      m.opacity = Math.max(0, m.opacity - dt * 1.1);
+      this.netFlash.visible = m.opacity > 0.01;
+    }
     for (let i = this.hitFx.length - 1; i >= 0; i--) {
       const f = this.hitFx[i];
       f.t += dt / 0.28;
@@ -1042,7 +1116,11 @@ class Game {
       if (e.id > this.lastEvent) {
         this.sound(e.kind);
         if (e.kind === "pala") this.onHit(e.side ?? 0);
-        if (e.kind === "punto") this.rally = 0;
+        if (e.kind === "punto") {
+          this.rally = 0;
+          this.pointToast(e.side ?? 0);
+        }
+        if (e.kind === "red") this.onNet();
         this.lastEvent = e.id;
       }
     this.updateHitFx(dt);
