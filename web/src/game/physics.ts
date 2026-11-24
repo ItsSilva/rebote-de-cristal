@@ -205,6 +205,7 @@ export class Simulation {
         this.sound("mesa");
       } else if (hit.kind === "red") {
         this.rules.net = true;
+        this.rules.shotNet = true;
         this.velocity.z *= -0.22;
         this.velocity.x *= 0.7;
         this.velocity.y *= 0.7;

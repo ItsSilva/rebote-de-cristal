@@ -19,6 +19,8 @@ export class Rules {
   bounces = 0;
   serveStage = 0;
   net = false;
+  /** La bola tocó la red en el golpe actual (no solo en el saque). */
+  shotNet = false;
   reason = "Toma la pala. Activa el saque. Devuelve tras el primer bote.";
   winner: Side | null = null;
   hits = 0;
@@ -31,6 +33,7 @@ export class Rules {
     this.bounces = 0;
     this.serveStage = 0;
     this.net = false;
+    this.shotNet = false;
     this.revision++;
   }
   toss() {
@@ -47,6 +50,7 @@ export class Rules {
       this.last = s;
       this.bounces = 0;
       this.serveStage = 1;
+      this.shotNet = false;
       this.hits++;
       this.revision++;
       return true;
@@ -62,6 +66,7 @@ export class Rules {
     }
     this.last = s;
     this.bounces = 0;
+    this.shotNet = false;
     this.hits++;
     this.revision++;
     return true;
@@ -99,7 +104,10 @@ export class Rules {
       return;
     }
     if (s === this.last) {
-      this.point(other(this.last), "Campo incorrecto");
+      this.point(
+        other(this.last),
+        this.shotNet ? "Tocó la red y no pasó" : "Botó en su propio lado",
+      );
       return;
     }
     if (++this.bounces >= 2) this.point(this.last, "Segundo bote");
@@ -118,7 +126,7 @@ export class Rules {
         this.bounces === 1 && this.serveStage === 0
           ? this.last
           : other(this.last),
-        "Fuera",
+        this.shotNet && this.bounces === 0 ? "Tocó la red y salió" : "Fuera",
       );
   }
   point(s: Side, why: string, rally = this.rally) {
