@@ -6,6 +6,7 @@ export type Settings = {
   sound: boolean;
   volume: number; // 0..100
   fps: boolean;
+  hints: boolean; // ayuda de controles: se oculta sola durante el punto
   cpuLevel: 0 | 1 | 2; // fácil, normal, difícil
   hand: "left" | "right";
   seated: boolean;
@@ -26,6 +27,7 @@ export function defaults(): Settings {
     sound: true,
     volume: 70,
     fps: true,
+    hints: true,
     cpuLevel: 1,
     hand: "right",
     seated: false,
@@ -50,6 +52,7 @@ export function loadSettings(): Settings {
           ? Math.min(100, Math.max(0, Math.round(s.volume)))
           : base.volume,
       fps: typeof s.fps === "boolean" ? s.fps : base.fps,
+      hints: typeof s.hints === "boolean" ? s.hints : base.hints,
       cpuLevel: s.cpuLevel === 0 || s.cpuLevel === 2 ? s.cpuLevel : 1,
       hand: s.hand === "left" ? "left" : "right",
       seated: typeof s.seated === "boolean" ? s.seated : base.seated,
@@ -98,6 +101,7 @@ export function writeForm(form: HTMLFormElement, s: Settings) {
   check("motion", s.motion);
   check("sound", s.sound);
   check("fps", s.fps);
+  check("hints", s.hints);
   check("shortcuts", s.shortcuts);
   const vol = form.querySelector<HTMLInputElement>("input[name=volume]");
   if (vol) vol.value = String(s.volume);
@@ -122,6 +126,7 @@ export function readForm(form: HTMLFormElement, from: Settings): Settings {
     sound: data.has("sound"),
     volume: Math.min(100, Math.max(0, Number(str("volume", String(from.volume))))),
     fps: data.has("fps"),
+    hints: data.has("hints"),
     cpuLevel: level === 0 || level === 2 ? level : 1,
     hand: str("hand", from.hand) === "left" ? "left" : "right",
     seated: str("posture", from.seated ? "seated" : "standing") === "seated",
