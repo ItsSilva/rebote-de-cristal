@@ -14,6 +14,7 @@
       "bounces": 1,
       "serveStage": 0,
       "net": false,
+      "shotNet": false,
       "reason": "Fuera",
       "winner": 0,
       "hits": 43
@@ -35,7 +36,7 @@
           2,
           0
         ],
-        "reason": "Campo incorrecto",
+        "reason": "Botó en su propio lado",
         "hits": 7
       },
       {
@@ -62,7 +63,7 @@
           3,
           2
         ],
-        "reason": "Campo incorrecto",
+        "reason": "Botó en su propio lado",
         "hits": 19
       },
       {
@@ -107,7 +108,7 @@
           6,
           4
         ],
-        "reason": "Campo incorrecto",
+        "reason": "Botó en su propio lado",
         "hits": 37
       },
       {
@@ -144,6 +145,7 @@
       "bounces": 1,
       "serveStage": 0,
       "net": false,
+      "shotNet": false,
       "reason": "Fuera",
       "winner": 1,
       "hits": 11
