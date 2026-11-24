@@ -1,6 +1,6 @@
 # Fuentes, licencias y autoría
 
-Los modelos del club son geometría original generada para esta entrega mediante fuentes editables y asistencia de Codex. Se conservan código, JSON de geometría y mallas Unity. No se usaron modelos externos descargados.
+Los modelos del club son geometría original creada para esta entrega con fuentes editables. Se conservan código, JSON de geometría y mallas Unity. No se usaron modelos externos descargados.
 
 | Recurso | Origen y tratamiento |
 |---|---|

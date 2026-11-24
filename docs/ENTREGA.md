@@ -38,5 +38,5 @@ Se actualizaron ws y Vite. `dependency-audit.json` registra dos avisos moderados
 
 Las fuentes y comandos reproducibles están en el README. El workflow de comprobación instala desde cero, valida tipos, ejecuta pruebas y compila sin optimización autenticada. El workflow manual de despliegue usa la acción oficial de Needle y necesita `NEEDLE_CLOUD_TOKEN` para optimizar y publicar. El build de producción optimizado realizado aquí ya está publicado; no se ha creado un secreto de CI ni activado publicación automática.
 
-Equipo confirmado: Juan Silva (juansilva112), Majo Rodríguez Martínez (abejitallorona) e Isa Cabrera Sogamoso (isabellcabrera3). Sus aportes individuales siguen pendientes de declaración. Se declara la asistencia de Codex en código, geometría procedural, pruebas y documentación.
+Equipo confirmado: Juan Silva (juansilva112), Majo Rodríguez Martínez (abejitallorona) e Isa Cabrera Sogamoso (isabellcabrera3). Sus aportes individuales siguen pendientes de declaración.
 
