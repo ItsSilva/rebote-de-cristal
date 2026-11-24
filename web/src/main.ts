@@ -54,6 +54,8 @@ class Game {
   ballPop = 0;
   rally = 0;
   rallyTimer = 0;
+  /** Último estado mostrado del aviso de fin de partido. */
+  resultShown = false;
   xrWas = false;
   wasTrigger = false;
   wasSqueeze = false;
@@ -271,6 +273,14 @@ class Game {
       .querySelectorAll<HTMLButtonElement>("[data-action]")
       .forEach((b) => (b.onclick = () => this.action(b.dataset.action!)));
     this.bindSettings();
+    document.querySelector<HTMLElement>("#result-close")!.onclick = () =>
+      this.hideResult();
+    document.querySelector<HTMLElement>("#result")!.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape") this.hideResult();
+      },
+    );
     document
       .querySelector("needle-engine")
       ?.setAttribute(
@@ -380,6 +390,26 @@ class Game {
         void actuator.pulse(kind === "pala" ? 0.35 : 0.15, 35).catch(() => {});
     }
     if (!this.audio || !this.settings.sound || this.settings.volume <= 0) return;
+    if (kind === "victoria" || kind === "derrota") {
+      const notes =
+        kind === "victoria" ? [523, 659, 784, 1047] : [440, 370, 311];
+      const a = this.audio,
+        vol = 0.06 * (this.settings.volume / 70);
+      notes.forEach((f, i) => {
+        const t = a.currentTime + i * 0.12,
+          o = a.createOscillator(),
+          g = a.createGain();
+        o.type = kind === "victoria" ? "triangle" : "sine";
+        o.frequency.setValueAtTime(f, t);
+        g.gain.setValueAtTime(vol, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+        o.connect(g);
+        g.connect(a.destination);
+        o.start(t);
+        o.stop(t + 0.24);
+      });
+      return;
+    }
     const a = this.audio,
       t = a.currentTime,
       o = a.createOscillator(),
@@ -660,7 +690,13 @@ class Game {
       rig.position.set(p.x - head.x, 0, p.z - head.z);
       rig.rotation.y = this.side === 1 ? Math.PI : 0;
     } else {
-      this.ctx.mainCamera.position.set(p.x, this.seated ? 1.28 : 1.62, p.z);
+      // En escritorio el puesto queda 30 cm más atrás para ver y alcanzar bolas altas.
+      const back = destination === "entry" || destination === "bench" ? 0 : 0.3;
+      this.ctx.mainCamera.position.set(
+        p.x,
+        this.seated ? 1.28 : 1.62,
+        p.z + back * s,
+      );
       this.ctx.mainCamera.lookAt(
         0,
         0.91,
@@ -719,9 +755,10 @@ class Game {
             1.26 * this.sign,
           )
         : v(
-            clamp(this.pointer.x * 0.9, -0.7, 0.7),
-            clamp(1.02 - this.pointer.y * 0.5, 0.82, 1.55),
-            1.24 * this.sign,
+            clamp(this.pointer.x * 1.0, -0.8, 0.8),
+            clamp(1.06 - this.pointer.y * 0.62, 0.82, 1.7),
+            // Más atrás que el borde de la mesa: la bola ya bajó cuando llega.
+            1.5 * this.sign,
           );
       pos = lerp(p.p, base, Math.min(1, dt * 20));
     }
@@ -1017,11 +1054,44 @@ class Game {
       document.querySelector("#performance")!.textContent =
         `${Math.round(1000 / (this.metric.reduce((a, b) => a + b, 0) / (this.metric.length || 1)))} FPS · sesión actual`;
   }
+  showResult() {
+    const r = this.sim.rules,
+      won = r.winner === this.side,
+      mine = r.score[this.side],
+      theirs = r.score[this.side === 0 ? 1 : 0],
+      cpu = this.sim.cpu;
+    const box = document.querySelector<HTMLElement>("#result")!;
+    box.classList.toggle("is-win", won);
+    box.classList.toggle("is-loss", !won);
+    document.querySelector("#result-title")!.textContent = won
+      ? "¡Ganaste!"
+      : "Perdiste";
+    document.querySelector("#result-score")!.textContent = `${mine} : ${theirs}`;
+    document.querySelector("#result-detail")!.textContent = won
+      ? `Le ganaste ${cpu ? "al autómata" : "a tu rival"}. ¿Otra para confirmarlo?`
+      : `Esta vez ganó ${cpu ? "el autómata" : "tu rival"}. La revancha está a un clic.`;
+    box.hidden = false;
+    this.sound(won ? "victoria" : "derrota");
+    box.querySelector<HTMLElement>("[data-action=rematch]")?.focus();
+  }
+  hideResult() {
+    const box = document.querySelector<HTMLElement>("#result")!;
+    if (box.hidden) return;
+    box.hidden = true;
+    document.querySelector<HTMLElement>("#controls")?.focus();
+  }
   refresh() {
     const r = this.sim.rules,
       server = r.server === 0 ? "A" : "B",
       score = `${r.score[0]} : ${r.score[1]}`;
     document.querySelector("#score")!.textContent = score;
+    if (r.phase === "fin" && !this.resultShown) {
+      this.resultShown = true;
+      this.showResult();
+    } else if (r.phase !== "fin" && this.resultShown) {
+      this.resultShown = false;
+      document.querySelector<HTMLElement>("#result")!.hidden = true;
+    }
     if (score !== this.lastScoreText) {
       this.lastScoreText = score;
       document.querySelector("#sr-score")!.textContent =

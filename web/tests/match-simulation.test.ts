@@ -9,8 +9,10 @@ function play(
   speed = 1.59,
   trigger = 0.72,
   aim = 0,
+  level: 0 | 1 | 2 = 1,
 ) {
   const s = new Simulation();
+  s.cpuLevel = level;
   let serveAge = 0,
     returnAge = 0,
     tossAge = 0,
@@ -95,8 +97,8 @@ function play(
   }
   return { rules: s.rules, time: s.time, points };
 }
-test("partidos completos con entradas cinemáticas: CPU gana y CPU pierde; revancha", () => {
-  const win = play(true, 0.05, 1.6, 0.72, 0),
+test("partidos completos con entradas cinemáticas: CPU (fácil) pierde y CPU gana; revancha", () => {
+  const win = play(true, 0.05, 1.6, 0.72, 0, 0),
     loss = play(false);
   writeFileSync(
     "../evidencias/partidos-simulacion.json",

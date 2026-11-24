@@ -4,133 +4,142 @@
     "rules": {
       "score": [
         7,
-        4
+        5
       ],
       "phase": "fin",
-      "server": 1,
-      "rally": 11,
-      "revision": 92,
-      "last": 1,
-      "bounces": 0,
+      "server": 0,
+      "rally": 12,
+      "revision": 125,
+      "last": 0,
+      "bounces": 1,
       "serveStage": 0,
       "net": false,
       "reason": "Fuera",
       "winner": 0,
-      "hits": 29
+      "hits": 43
     },
-    "time": 43.71666666666483,
+    "time": 57.61666666666404,
     "points": [
       {
-        "time": 2.66666666666666,
+        "time": 3.441666666666657,
         "score": [
-          0,
-          1
+          1,
+          0
         ],
-        "reason": "Campo incorrecto",
+        "reason": "Fuera",
         "hits": 3
       },
       {
-        "time": 6.941666666666801,
+        "time": 8.3583333333335,
         "score": [
-          0,
-          2
+          2,
+          0
         ],
         "reason": "Campo incorrecto",
-        "hits": 6
+        "hits": 7
       },
       {
-        "time": 11.050000000000013,
+        "time": 13.683333333333197,
         "score": [
-          1,
-          2
+          2,
+          1
         ],
         "reason": "Fuera",
-        "hits": 9
+        "hits": 11
       },
       {
-        "time": 15.574999999999756,
+        "time": 18.741666666666244,
         "score": [
           2,
           2
         ],
         "reason": "Fuera",
-        "hits": 12
+        "hits": 15
       },
       {
-        "time": 18.999999999999563,
+        "time": 23.65833333333263,
         "score": [
           3,
           2
         ],
-        "reason": "Segundo bote",
-        "hits": 13
-      },
-      {
-        "time": 23.27499999999932,
-        "score": [
-          3,
-          3
-        ],
         "reason": "Campo incorrecto",
-        "hits": 16
-      },
-      {
-        "time": 27.38333333333242,
-        "score": [
-          4,
-          3
-        ],
-        "reason": "Fuera",
         "hits": 19
       },
       {
-        "time": 31.908333333332163,
+        "time": 28.708333333332344,
         "score": [
-          5,
-          3
+          4,
+          2
         ],
         "reason": "Fuera",
         "hits": 22
       },
       {
-        "time": 36.18333333333192,
+        "time": 33.1333333333321,
+        "score": [
+          4,
+          3
+        ],
+        "reason": "Fuera",
+        "hits": 26
+      },
+      {
+        "time": 38.341666666665134,
+        "score": [
+          4,
+          4
+        ],
+        "reason": "Fuera",
+        "hits": 30
+      },
+      {
+        "time": 43.39166666666485,
         "score": [
           5,
           4
         ],
-        "reason": "Campo incorrecto",
-        "hits": 25
+        "reason": "Fuera",
+        "hits": 33
       },
       {
-        "time": 39.60833333333173,
+        "time": 48.33333333333123,
         "score": [
           6,
           4
         ],
-        "reason": "Segundo bote",
-        "hits": 26
+        "reason": "Campo incorrecto",
+        "hits": 37
       },
       {
-        "time": 43.71666666666483,
+        "time": 54.141666666664236,
         "score": [
-          7,
-          4
+          6,
+          5
         ],
         "reason": "Fuera",
-        "hits": 29
+        "hits": 41
+      },
+      {
+        "time": 57.61666666666404,
+        "score": [
+          7,
+          5
+        ],
+        "reason": "Fuera",
+        "hits": 43
       }
     ]
   },
   "loss": {
     "rules": {
       "score": [
-        1,
+        0,
         7
       ],
       "phase": "fin",
-      "server": 0,
-      "rally": 8,
-      "revision": 53,
+      "server": 1,
+      "rally": 7,
+      "revision": 49,
       "last": 1,
       "bounces": 1,
       "serveStage": 0,
@@ -139,10 +148,10 @@
       "winner": 1,
       "hits": 11
     },
-    "time": 29.066666666665657,
+    "time": 28.616666666665683,
     "points": [
       {
-        "time": 2.8416666666666592,
+        "time": 3.0083333333333253,
         "score": [
           0,
           1
@@ -151,7 +160,7 @@
         "hits": 2
       },
       {
-        "time": 7.291666666666819,
+        "time": 7.608333333333501,
         "score": [
           0,
           2
@@ -160,7 +169,7 @@
         "hits": 4
       },
       {
-        "time": 10.316666666666721,
+        "time": 11.533333333333319,
         "score": [
           0,
           3
@@ -169,7 +178,7 @@
         "hits": 5
       },
       {
-        "time": 14.241666666666498,
+        "time": 15.458333333333096,
         "score": [
           0,
           4
@@ -178,36 +187,27 @@
         "hits": 6
       },
       {
-        "time": 17.666666666666305,
+        "time": 20.074999999999502,
         "score": [
-          1,
-          4
-        ],
-        "reason": "Segundo bote",
-        "hits": 7
-      },
-      {
-        "time": 22.116666666666053,
-        "score": [
-          1,
+          0,
           5
         ],
         "reason": "Fuera",
-        "hits": 9
+        "hits": 8
       },
       {
-        "time": 25.14166666666588,
+        "time": 24.691666666665906,
         "score": [
-          1,
+          0,
           6
         ],
         "reason": "Fuera",
         "hits": 10
       },
       {
-        "time": 29.066666666665657,
+        "time": 28.616666666665683,
         "score": [
-          1,
+          0,
           7
         ],
         "reason": "Fuera",
