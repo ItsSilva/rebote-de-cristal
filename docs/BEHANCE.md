@@ -69,5 +69,5 @@ Insertar el POV real de 1–2 minutos y los enlaces verificados de GitHub y Need
 | Majo Rodríguez Martínez (abejitallorona) | Por confirmar | Pendiente de declaración de la integrante | Pendiente |
 | Isa Cabrera Sogamoso (isabellcabrera3) | Por confirmar | Pendiente de declaración de la integrante | Pendiente |
 
-Declarar la asistencia de Codex en código, autoría procedural, pruebas y documentación. Distinguir esa asistencia de las decisiones y el trabajo humano que realmente realizó cada persona. No asignar tareas a alguien solo porque su nombre aparece en la cuenta de publicación.
+Describir el trabajo que realmente realizó cada persona. No asignar tareas a alguien solo porque su nombre aparece en la cuenta de publicación.
 

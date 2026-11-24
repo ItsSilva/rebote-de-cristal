@@ -72,7 +72,7 @@ La matriz y los resultados definitivos se mantienen en `docs/MATRIZ.md` y `docs/
 
 ## Créditos
 
-Escenario, palas, dispensador y autómata generados para este proyecto mediante código editable asistido por Codex. No se copiaron emblemas ni el personaje de la referencia inflable. Las imágenes de referencia y el brief permanecen en la carpeta de trabajo y se excluyen del repositorio por no haberse confirmado su licencia de redistribución. Los tres integrantes están registrados; el equipo debe completar los aportes reales y créditos en `docs/BEHANCE.md`.
+Escenario, palas, dispensador y autómata modelados para este proyecto con geometría propia y editable. No se copiaron emblemas ni el personaje de la referencia inflable. Las imágenes de referencia y el brief permanecen en la carpeta de trabajo y se excluyen del repositorio por no haberse confirmado su licencia de redistribución. Los tres integrantes están registrados; el equipo debe completar los aportes reales y créditos en `docs/BEHANCE.md`.
 
 Base técnica: [plantilla Vite oficial de Needle](https://github.com/needle-engine/vite-template), [Needle para Unity](https://engine.needle.tools/docs/unity/), [networking](https://engine.needle.tools/docs/how-to-guides/networking/setup), [XR](https://engine.needle.tools/docs/how-to-guides/xr/index.html) y [publicación](https://engine.needle.tools/docs/cloud/).
 
