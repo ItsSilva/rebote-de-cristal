@@ -21,6 +21,9 @@ export const SIZE = {
   radius: 0.02,
   paddleRadius: 0.09,
   step: 1 / 120,
+  /** Altura con la que choca la bola: menor que la red visible (15,25 cm)
+   *  para que el juego sea más fluido. */
+  netHit: 0.11,
 };
 export type Paddle = {
   p: V;
@@ -177,7 +180,7 @@ export class Simulation {
           point = lerp(a, b, t);
         if (
           Math.abs(point.x) < SIZE.width / 2 + 0.035 &&
-          point.y < SIZE.top + SIZE.net + SIZE.radius &&
+          point.y < SIZE.top + SIZE.netHit + SIZE.radius &&
           point.y > SIZE.top - 0.03
         )
           contacts.push({ t, kind: "red", normal: v(0, 0, sign), point });
@@ -327,7 +330,7 @@ export class Simulation {
   aim(p0: V, vin: V, aimX: number, padV: V): V {
     let best = { n: norm(v(0, 0.35, 1)), score: Infinity };
     const h = SIZE.step,
-      netY = SIZE.top + SIZE.net + 0.03,
+      netY = SIZE.top + SIZE.netHit + 0.03,
       tableY = SIZE.top + SIZE.radius;
     for (let tilt = -0.3; tilt <= 0.95; tilt += 0.05)
       for (const yaw of [-0.3, -0.18, -0.08, 0, 0.08, 0.18, 0.3]) {
@@ -360,7 +363,9 @@ export class Simulation {
           Math.max(0, 0.2 - land.z) +
           Math.max(0, land.z - 1.25);
         const score =
-          outside * 20 + Math.abs(land.z - 0.85) + Math.abs(land.x - aimX) * 0.8;
+          outside * 20 +
+          Math.abs(land.z - 0.85) +
+          Math.abs(land.x - aimX) * 0.8;
         if (score < best.score) best = { n, score };
       }
     return best.n;
@@ -394,8 +399,11 @@ export class Simulation {
       if (!bounced || p.z > -0.95 || vel.z > 0) continue;
       // Preferir una altura cómoda (≈1,05 m) y no ir demasiado lejos de la mesa.
       const score =
-        Math.abs(p.y - 1.05) * 2 + Math.max(0, -1.75 - p.z) * 3 + (p.y > 1.55 ? 5 : 0);
-      if (!best || score < best.score) best = { p: { ...p }, v: { ...vel }, t, score };
+        Math.abs(p.y - 1.05) * 2 +
+        Math.max(0, -1.75 - p.z) * 3 +
+        (p.y > 1.55 ? 5 : 0);
+      if (!best || score < best.score)
+        best = { p: { ...p }, v: { ...vel }, t, score };
       if (p.y < 0.85) break;
     }
     return best ? { p: best.p, v: best.v, t: best.t } : null;
@@ -416,6 +424,22 @@ export class Simulation {
     if (!serving && this.velocity.z * (s === 0 ? -1 : 1) > 0)
       this.velocity.z =
         (s === 0 ? -1 : 1) * clamp(Math.abs(this.velocity.z), 2.6, 5.5);
+    if (!serving && !(this.cpu && s === 1)) this.assist(s);
+  }
+  /** Ayuda suave al golpe de una persona: si la bola no va a pasar la red,
+   *  le da la altura justa para librarla (la CPU apunta por su cuenta). */
+  assist(s: Side) {
+    const dir = s === 0 ? -1 : 1,
+      vz = this.velocity.z * dir;
+    if (vz <= 0) return;
+    const t = Math.abs(this.p.z) / vz;
+    if (t <= 0 || t > 1.2) return;
+    const clear = SIZE.top + SIZE.netHit + SIZE.radius + 0.04,
+      yAtNet = this.p.y + this.velocity.y * t - 4.905 * t * t;
+    if (yAtNet >= clear) return;
+    const needed = (clear - this.p.y + 4.905 * t * t) / t;
+    // Solo corrige hasta 2,5 m/s: un golpe muy malo sigue fallando.
+    this.velocity.y = Math.min(needed, this.velocity.y + 2.5);
   }
   snapshot() {
     return {
